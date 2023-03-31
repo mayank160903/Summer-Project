@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/coursepage.css">
+        <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&family=Special+Elite&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Cabin&family=Lobster&family=Montserrat:ital,wght@1,100&family=Oswald:wght@300;400&family=Oxygen:wght@300;700&family=Prompt:wght@600&family=Quicksand:wght@300&family=Righteous&family=Secular+One&family=Tilt+Prism&display=swap" rel="stylesheet">
+
+    </head>
+    <body bgcolor="black">
+        <%- include('header'); -%>
+        <div class="top-bar">
+        <div class="course-title">
+            <h1>GETTING STARTED</h1>
+        </div>
+        <div>
+            <button class="add-to-fav-button">
+                <div class="button-icon">
+                    <img src="images/wishlisticon.png">
+                </div>
+                <div class="button-text">
+                    Add Course to Wishlist
+                </div>
+            </button>
+        </div>
+    </div>
+
+        <div class = "main-video">
+            <div>
+            <video poster="images/acousticpic.jpg" id="main-video" src="videos/beginner1.mp4" type="video/mp4" controls></video>
+        </div>
+        </div>
+        <div class="fav-share-buttons">
+            <div>
+                <button class="add-to-fav-button">
+                    <div class="button-icon">
+                        <img src="images/wishlisticon.png">
+                    </div>
+                    <div class="button-text">
+                        Add to Favourites
+                    </div>
+                </button>
+            </div>
+
+            <div>
+                <button class="add-to-fav-button">
+                    <div>
+                        <img src="images/buynow.png">
+                    </div>
+                    <div class="button-text">
+                        Buy Now
+                    </div>
+                </button>
+            </div>
+
+        <div>
+            <button class="add-to-fav-button">
+                <div>
+                    <img src="images/share-button.png">
+                </div>
+                <div class="button-text">
+                    Share
+                </div>
+            </button>
+        </div>
+        
+    </div>
+    <hr style="color: azure;">
+
+        
+        
+        
+        <%- include('footer'); -%>
+        <script src="" async defer></script>
+    </body>
+</html>

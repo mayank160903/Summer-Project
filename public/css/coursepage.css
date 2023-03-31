@@ -1,0 +1,90 @@
+#main-video{
+    padding: 50px;
+    height: 500px;
+    width:850px;
+    /* align-items: center; */
+    display: flex;
+    justify-content: center;
+}
+
+.main-video{
+    justify-content:space-between;
+}
+
+body{
+    color: white;
+
+}
+
+
+h1 {
+
+    /* text-shadow: -1px 1px 0 #0a6cddae,
+                          1px 1px 0 #0a6cddae,
+                         1px -1px 0 #0a6cddae,
+                        -1px -1px 0 #0a6cddae; */
+    color: rgba(255, 255, 255, 0.967);
+    padding: 5px;
+    margin: 5px;
+    /* margin-left: 1000px; */
+    font-family: 'Shadows Into Light', cursive;
+    text-shadow: 10px 10px 25px #00fff2;
+    font-size: 47px;
+    font-style: normal;
+    font-variant: normal;
+    line-height: 44px;
+
+
+}
+
+
+.top-bar{
+    background-color: rgb(43, 43, 43);
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+
+
+button{
+    
+    background-color: rgb(1, 150, 200);
+    border-radius: 25px;
+    /* border: 30px; */
+}
+
+button:hover{
+    background-color: deepskyblue;   
+
+}
+
+.add-to-fav-button{
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+
+}
+.button-icon:hover{
+    background-image: url(images/wishlisthover.png);
+}
+
+
+.button-text{
+    font-size: 15px;
+    padding-top: 2px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bolder;
+}
+
+
+.fav-share-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+
+}

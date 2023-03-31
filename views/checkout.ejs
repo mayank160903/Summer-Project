@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "css/checkout.css">
+    <link href="https://unpkg.com/pattern.css" rel="stylesheet">
+    <script src="js/checkout.js"></script>
+    <title>Check Out</title>
+</head>
+<body>
+<div class="center-wrapper">
+	<div class="content">
+	
+	<div class="top-bar">
+		<i class="fas fa-arrow-left"></i>
+		<span class="bb"><a href="/coursedescpage">Go Back</a></span>
+	</div>
+
+	<div class="bag-product pt-4">
+		<div class="course_img">
+			<img src="https://images.pexels.com/photos/1407322/pexels-photo-1407322.jpeg" class = "img1">
+		</div>
+		<div class="description">
+			<p class="product-code small" style="color: grey;">Product code: SS022592000</p>
+			<h1>Learn Guitar in 3 Days</h1>
+			<p class="teacher">By Music teacher 3</p>
+			<p class="course-info">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, necessitatibus?</p>
+		</div>
+	</div>
+	<div class="bag-total">
+		<div class="total">
+			<h3>Price:</h3>
+			<h3>$14.99</h3>
+		</div>
+		<div class="" style = "margin: 1rem 0;">
+			<input type="checkbox" name="promo-check" id = "mycheck">
+			<label for="promo-check">I have a promo code</label>
+		</div>
+		<div class="promo-code">
+			<input type="text" name="promo-checkbox" id = "promo" placeholder="Enter your promo code here">
+			<button class="apply" onclick="confrm()">Apply</button>
+		</div>
+		<button class="checkbtn" id = "chkout" onclick="confrm()">
+			<div>Proceed to Checkout</div>
+		</button>
+	</div>
+	<div style="text-align: center; 
+    margin-bottom: 2rem; margin-top: 0.7rem;">
+		<p class="hlp" onclick="copytoclip(8076779704)">Need help? Call +91 8076779704 </p>
+	</div>
+</div>
+</div>
+<div class="bg"></div>
+<!-- <%- include('footer'); -%> -->
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+</body>
+</html>
