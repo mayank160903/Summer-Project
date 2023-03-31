@@ -10,12 +10,13 @@
     <title>Check Out</title>
 </head>
 <body>
+
 <div class="center-wrapper">
 	<div class="content">
 	
 	<div class="top-bar">
 		<i class="fas fa-arrow-left"></i>
-		<span class="bb"><a href="/coursedescpage">Go Back</a></span>
+		<span class="bb"> Go Back</span>
 	</div>
 
 	<div class="bag-product pt-4">
@@ -34,11 +35,24 @@
 			<h3>Price:</h3>
 			<h3>$14.99</h3>
 		</div>
-		<div class="" style = "margin: 1rem 0;">
+		<div class="" style = "margin: 1rem 0;" id="abracadbra">
 			<input type="checkbox" name="promo-check" id = "mycheck">
 			<label for="promo-check">I have a promo code</label>
 		</div>
-		<div class="promo-code">
+		<div class="promo_warning" id="warn1">
+           <p class="warn1">Please Enter a Promo Code!</p>
+		</div>
+		<div class="promo_warning" id="warn2">
+			<p class="warn1">Promo Code Should be AlphaNumeric and atleast 6 characters long!</p>
+		 </div>
+		 
+		<div class="promo_warning" id="warn3">
+			<p class="warn1">Invalid Promo Code!</p>
+		 </div>
+		 <div class="promo_warning" id="good90" style="color: #22ad3a;">
+			<p class="warn1">Promo Code Applied</p>
+		 </div>
+		<div class="promo-code" id="promo_input">
 			<input type="text" name="promo-checkbox" id = "promo" placeholder="Enter your promo code here">
 			<button class="apply" onclick="confrm()">Apply</button>
 		</div>
@@ -48,11 +62,18 @@
 	</div>
 	<div style="text-align: center; 
     margin-bottom: 2rem; margin-top: 0.7rem;">
-		<p class="hlp" onclick="copytoclip(8076779704)">Need help? Call +91 8076779704 </p>
+		
+		<abbr title="Click To Copy Phone Number" style="text-decoration: none;" id="ccpy">
+			<p class="hlp" onclick="copytoclip(8076779704)">Need help? Call +91 8076779704 
+				</p></abbr>
 	</div>
 </div>
 </div>
 <div class="bg"></div>
+<div class="pop_container">
+<div class="popover1" id="rem123">
+ <div  style="text-align: center;"> Copied To Clipboard!</div>
+</div></div>
 <!-- <%- include('footer'); -%> -->
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
