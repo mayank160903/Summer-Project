@@ -242,7 +242,7 @@ app.post('/submit',  (req, res,next) => {
                 return res.redirect('/register')}
                 
                 else 
-                 console.log("USername already in use")
+                 console.log("Username already in use")
                  return res.redirect('/register')}
 
 
@@ -254,7 +254,8 @@ app.post('/submit',  (req, res,next) => {
                     password: password,
                     phone: pno
                   });
-                  return person.save();
+                  person.save();
+                  res.redirect("/login");
                  
             }
         }).catch((err) => {
