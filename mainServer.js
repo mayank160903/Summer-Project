@@ -9,6 +9,7 @@ const ejs = require("ejs");
 const sqlite3 = require('sqlite3');
 const mongoose = require("mongoose");
 const session=require("express-session");
+const { collection } = require('./models/user');
 
 
 const db_name = path.join(__dirname, "data", "Music.db");
@@ -23,16 +24,6 @@ app.use('/images', express.static(__dirname + 'public/images'));
 
 app.set("view engine", "ejs");
 app.set('views', './views');
-
-
-const mongodbURI="mongodb://127.0.0.1:27017/MastersOfMusic"
-mongoose.connect(mongodbURI).then(()=>{
-    console.log("MongoDB Connected!");
-})
-.catch((err)=>{
-    console.log("Error connecting")
-})
-
 
 // app.get("/", (req, res) => {
 //     res.render("home");
@@ -224,6 +215,13 @@ db.run(structure2, err => {
 
 
 
+const mongodbURI="mongodb://127.0.0.1:27017/MastersOfMusic"
+mongoose.connect(mongodbURI).then(()=>{
+    console.log("MongoDB Connected!");
+})
+.catch((err)=>{
+    console.log("Error connecting")
+})
 
 app.post('/submit',  (req, res,next) => {
     
@@ -298,98 +296,106 @@ app.post('/submit',  (req, res,next) => {
 
 });
 
+// app.post('/login', (req, res) => {
+//     const username = req.body.name;
+//     const password = req.body.password;
+//     const role = req.body.role;
 
+//     if (role == 'user') {
+//         // userSchema.findOne({username: username}).then((usercollection) => {
 
+//         //     if (!usercollection) {
+//         //         alert("Invalid Username")
+//         //     } else {
+                
+//         //         if(usercollection.password === password) {
+//         //         console.log(usercollection)
+//         //     }
 
-app.post('/login', (req, res) => {
-    const username = req.body.name;
-    const password = req.body.password;
-    const role = req.body.role;
+//         // }
 
-    if (role == 'user') {
-        let sql = `SELECT * FROM users WHERE username = $username AND password = $password`;
+//         let sql = `SELECT * FROM users WHERE username = $username AND password = $password`;
 
+//         db.get(sql, { $username: username, $password: password }, (err, row) => {
 
-        db.get(sql, { $username: username, $password: password }, (err, row) => {
+//             console.log(row);
+//             if (err) {
+//                 // console.error(err.message);
+//                 res.render('./login.ejs', { user: null, error: err })
+//             }
 
-            console.log(row);
-            if (err) {
-                // console.error(err.message);
-                res.render('./login.ejs', { user: null, error: err })
-            }
+//             console.log(row);
+//             if (row) {
+//                 res.render('./login-catalogue.ejs', { user: row });
+//             } else {
 
-            console.log(row);
-            if (row) {
-                res.render('./login-catalogue.ejs', { user: row });
-            } else {
-
-                console.log(row);
-                //console.log(name);
-                console.log(password);
-                res.render('./login.ejs', { error: 'Invalid email or password.', user: null });
-                console.log(err);
-            }
-        });
+//                 console.log(row);
+//                 //console.log(name);
+//                 console.log(password);
+//                 res.render('./login.ejs', { error: 'Invalid email or password.', user: null });
+//                 console.log(err);
+//             }
+//         });
     
-    }
+    
 
 
 
-    else if(role=='admin'){
-        let sql = `SELECT * FROM teachers WHERE username = $username AND password = $password`;
+//     else if(role=='admin'){
+//         let sql = `SELECT * FROM teachers WHERE username = $username AND password = $password`;
 
 
-        db.get(sql, { $username: username, $password: password }, (err, row) => {
+//         db.get(sql, { $username: username, $password: password }, (err, row) => {
 
-            console.log(row);
-            if (err) {
-                // console.error(err.message);
-                res.render('./login.ejs', { user: null, error: err })
-            }
+//             console.log(row);
+//             if (err) {
+//                 // console.error(err.message);
+//                 res.render('./login.ejs', { user: null, error: err })
+//             }
 
-            console.log(row);
-            if (row) {
-                res.render('./admin.ejs', { user: row });
-            } else {
+//             console.log(row);
+//             if (row) {
+//                 res.render('./admin.ejs', { user: row });
+//             } else {
 
-                console.log(row);
-                //console.log(name);
-                console.log(password);
-                res.render('./login.ejs', { error: 'Invalid email or password.', user: null });
-                console.log(err);
-            }
-        });
-    }
-
-
-
-    else {
-        let sql = `SELECT * FROM teachers WHERE username = $username AND password = $password`;
+//                 console.log(row);
+//                 //console.log(name);
+//                 console.log(password);
+//                 res.render('./login.ejs', { error: 'Invalid email or password.', user: null });
+//                 console.log(err);
+//             }
+//         });
+//     }
 
 
-        db.get(sql, { $username: username, $password: password }, (err, row) => {
 
-            console.log(row);
-            if (err) {
-                // console.error(err.message);
-                res.render('./login.ejs', { user: null, error: err })
-            }
+//     else {
+//         let sql = `SELECT * FROM teachers WHERE username = $username AND password = $password`;
 
-            console.log(row);
-            if (row) {
-                res.render('./header.ejs', { user: row });
-            } else {
 
-                console.log(row);
-                //console.log(name);
-                console.log(password);
-                res.render('./login.ejs', { error: 'Invalid email or password.', user: null });
-                console.log(err);
-            }
-        });
-    }
+//         db.get(sql, { $username: username, $password: password }, (err, row) => {
 
-});
+//             console.log(row);
+//             if (err) {
+//                 // console.error(err.message);
+//                 res.render('./login.ejs', { user: null, error: err })
+//             }
+
+//             console.log(row);
+//             if (row) {
+//                 res.render('./header.ejs', { user: row });
+//             } else {
+
+//                 console.log(row);
+//                 //console.log(name);
+//                 console.log(password);
+//                 res.render('./login.ejs', { error: 'Invalid email or password.', user: null });
+//                 console.log(err);
+//             }
+//         });
+//     }
+
+// });
 
 
 // app.get('/abc', (req, res) => {
