@@ -1,8 +1,14 @@
+const userSchema = require(__dirname + "/models/user.js");
+// const bcrypt = require("bcryptjs");
+
+
 const express = require('express');
 const path = require('path');
 const app = express();
 const ejs = require("ejs");
 const sqlite3 = require('sqlite3');
+const mongoose = require("mongoose");
+const session=require("express-session");
 
 
 const db_name = path.join(__dirname, "data", "Music.db");
@@ -17,6 +23,16 @@ app.use('/images', express.static(__dirname + 'public/images'));
 
 app.set("view engine", "ejs");
 app.set('views', './views');
+
+
+const mongodbURI="mongodb://127.0.0.1:27017/MastersOfMusic"
+mongoose.connect(mongodbURI).then(()=>{
+    console.log("MongoDB Connected!");
+})
+.catch((err)=>{
+    console.log("Error connecting")
+})
+
 
 // app.get("/", (req, res) => {
 //     res.render("home");
@@ -209,59 +225,52 @@ db.run(structure2, err => {
 
 
 
-
-
-
-
-
-
-
-
-
-app.post('/submit', (req, res) => {
+app.post('/submit',  (req, res,next) => {
+    
     const full_name = req.body.full_name;
     const username = req.body.username;
     const email = req.body.email;
     const role = req.body.role;
+    const pno = req.body.phno
     const password = req.body.password;
     const confirm_password = req.body.confirm_password;
+   
 
-    if (role == 'user') {
+    if (role == 'user') {    
+        userSchema.findOne({$or:[{email: email},{username:username}]}).then((usercollection) => {
+            if (usercollection){
+                if(collection.email === email){
+                console.log("Email Already in use")
+                return res.redirect('/register')}
+                
+                else 
+                 console.log("USername already in use")
+                 return res.redirect('/register')}
 
-        let sql2 = `SELECT * FROM users WHERE username = ? `;
-        console.log(username);
-        db.run(sql2, [username], (err, row) => {
-            if (err) {
 
-                console.error(err.message);
-                return res.render('./Register.ejs', { user: null, error: err });
-            } else if (row) {
-                console.log(row);
-                return res.render('./Register.ejs', { user: row, error: 'UserName is already taken' });
+            else {
+                const person = new userSchema({
+                    username: username,
+                    fullname: full_name,
+                    email: email,
+                    password: password,
+                    phone: pno
+                  });
+                  return person.save();
+                 
             }
-            const sql = 'INSERT INTO users (full_name, username, email, role ,password ,confirm_password) VALUES (?, ?, ? , ? ,? ,?)';
-            db.run(sql, [full_name, username, email, role, password, confirm_password], (err) => {
-                if (err) {
-                    console.error(err.message);
-                    // return console.error(err.message);
-                    return res.render('./Register.ejs', { user: null, error: err });
-                }
-                console.log(`Message from ${full_name} ${username} : ${email} ${role}  ${password} ${confirm_password}`);
-                return res.render('./login.ejs', { error: null });
-            });
-
-
-
-
-
-
-        });
-
-
-
-
-
+        }).catch((err) => {
+                console.log(err);
+              }); 
+        // userSchema.findOne({username:username}).then((usercollection) => {
+        //     if(usercollection){
+        //         console.log("Username already in use")
+        //         return res.redirect("/register");
+        //     }}).catch((err) => {
+        //         console.log(err);
+        //       });
     }
+
     else {
 
         let sql2 = `SELECT * FROM teachers WHERE username = ?`;
@@ -285,14 +294,12 @@ app.post('/submit', (req, res) => {
             });
         });
 
-
-
-
-
-
     }
 
 });
+
+
+
 
 app.post('/login', (req, res) => {
     const username = req.body.name;
