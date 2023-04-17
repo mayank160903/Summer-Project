@@ -1,4 +1,5 @@
 const userSchema = require(__dirname + "/models/user.js");
+const contactSchema = require(__dirname + "/models/contact.js");
 // const bcrypt = require("bcryptjs");
 
 
@@ -449,19 +450,22 @@ const structure4 = `CREATE TABLE IF NOT EXISTS query(
         const fname = req.body.fname;
         const lname = req.body.lname;
         const email = req.body.email;
-    
         const message = req.body.message;
-        const sql = `INSERT INTO query (fname, lname, email, message) VALUES (?, ?, ? , ? )`;
-        db.run(sql, [fname, lname, email, message], (err) => {
-            if (err) {
-                console.error(err.message);
-                // return console.error(err.message);
-                return res.render('./contactus.ejs');
-            }
-            console.log(`Message from ${fname} ${lname} : ${email} ${message}`);
-            return res.render('./homepage.ejs');
-        });
+
+        const contact = new contactSchema({
+            firstname: fname,
+            lastname: lname,
+            email: email,
+            message: message,
+          });
+          contact.save();
+          res.redirect('/contactus')
+
     
+    
+    
+    })
+ 
     
     
     
