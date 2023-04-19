@@ -10,13 +10,15 @@ const ejs = require("ejs");
 const sqlite3 = require('sqlite3');
 const mongoose = require("mongoose");
 const session=require("express-session");
-const { collection } = require('./models/user');
 
+
+// const { collection } = require('./models/user');
+// const { collection } = require('./models/contact');
 
 const db_name = path.join(__dirname, "data", "Music.db");
 
 // app.use(express.static(path.join(__dirname, "public")));
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'));
 app.use('/css', express.static(__dirname + 'public/css'));
 app.use('/js', express.static(__dirname + 'public/js'));
@@ -24,13 +26,26 @@ app.use('/images', express.static(__dirname + 'public/images'));
 
 
 app.set("view engine", "ejs");
-app.set('views', './views');
+app.set('views','./views');
 
+app.use(session({
+    secret: "Key sign",
+    resave: false,
+    saveUninitialized: false,
+    
+}))
 // app.get("/", (req, res) => {
 //     res.render("home");
 // })
 app.get("/login", (req, res) => {
-    res.render("login", { error: null });
+    
+    if(req.session.isLoggedin == true){
+    res.render("homepage", { error: null });
+    }
+    else{
+        res.render("login", { error: null });
+    
+    }
 })
 // app.get("/footer", (req, res) => {
 //     res.render("footer");
@@ -57,7 +72,7 @@ app.get('/wishlist', (req, res) => {
 })
 
 
-app.get('/coursepage', (req, res) => {
+app.get('/coursepage', (req, res) => { 
     res.render('coursepage');
 })
 
@@ -80,11 +95,14 @@ app.get('/spotlight', (req, res) => {
 })
 
 app.get("/", (req, res) => {
+    // req.session.isLoggedin
+    console.log(req.session)
     res.render("homepage");
 })
 
 
 app.get("/contactus", (req, res) => {
+    req.session.destroy()
     res.render("contactus");
 });
 
@@ -238,7 +256,7 @@ app.post('/submit',  (req, res,next) => {
     if (role == 'user') {    
         userSchema.findOne({$or:[{email: email},{username:username}]}).then((usercollection) => {
             if (usercollection){
-                if(collection.email === email){
+                if(usercollection.email === email){
                 console.log("Email Already in use")
                 return res.redirect('/register')}
                 
@@ -298,106 +316,98 @@ app.post('/submit',  (req, res,next) => {
 
 });
 
-// app.post('/login', (req, res) => {
-//     const username = req.body.name;
-//     const password = req.body.password;
-//     const role = req.body.role;
+app.post('/login', (req, res) => {
+    
+    const username = req.body.name;
+    const password = req.body.password;
+    const role = req.body.role;
 
-//     if (role == 'user') {
-//         // userSchema.findOne({username: username}).then((usercollection) => {
-
-//         //     if (!usercollection) {
-//         //         alert("Invalid Username")
-//         //     } else {
+    if (role == 'user') {
+        userSchema.findOne({username: username}).then((usercollection) => {
+            if (!usercollection) {
+                console.log("Invalid Username")
+            } else {
                 
-//         //         if(usercollection.password === password) {
-//         //         console.log(usercollection)
-//         //     }
+                if(usercollection.password === password) {
+                
+                req.session.isLoggedin = true;
+                req.session.user = usercollection; 
+                console.log(req.session)
+                return req.session.save((err) => {
+                console.log(err);
+                return res.redirect("/");
+                  });
+            
+                }
+                else{
+                    console.log("Wrong Password");
+                    return res.render('./login.ejs', { error: 'Wrong Password.', user: null });
 
-//         // }
+                }
+            }
 
-//         let sql = `SELECT * FROM users WHERE username = $username AND password = $password`;
-
-//         db.get(sql, { $username: username, $password: password }, (err, row) => {
-
-//             console.log(row);
-//             if (err) {
-//                 // console.error(err.message);
-//                 res.render('./login.ejs', { user: null, error: err })
-//             }
-
-//             console.log(row);
-//             if (row) {
-//                 res.render('./login-catalogue.ejs', { user: row });
-//             } else {
-
-//                 console.log(row);
-//                 //console.log(name);
-//                 console.log(password);
-//                 res.render('./login.ejs', { error: 'Invalid email or password.', user: null });
-//                 console.log(err);
-//             }
-//         });
+            res.render('./login.ejs', { error: 'Invalid Username.', user: null });
+        })
     
     
+    }
 
 
-
-//     else if(role=='admin'){
-//         let sql = `SELECT * FROM teachers WHERE username = $username AND password = $password`;
-
-
-//         db.get(sql, { $username: username, $password: password }, (err, row) => {
-
-//             console.log(row);
-//             if (err) {
-//                 // console.error(err.message);
-//                 res.render('./login.ejs', { user: null, error: err })
-//             }
-
-//             console.log(row);
-//             if (row) {
-//                 res.render('./admin.ejs', { user: row });
-//             } else {
-
-//                 console.log(row);
-//                 //console.log(name);
-//                 console.log(password);
-//                 res.render('./login.ejs', { error: 'Invalid email or password.', user: null });
-//                 console.log(err);
-//             }
-//         });
-//     }
+    else if(role=='admin'){
+        let sql = `SELECT * FROM teachers WHERE username = $username AND password = $password`;
 
 
+        db.get(sql, { $username: username, $password: password }, (err, row) => {
 
-//     else {
-//         let sql = `SELECT * FROM teachers WHERE username = $username AND password = $password`;
+            console.log(row);
+            if (err) {
+                // console.error(err.message);
+                res.render('./login.ejs', { user: null, error: err })
+            }
+
+            console.log(row);
+            if (row) {
+                res.render('./admin.ejs', { user: row });
+            } else {
+
+                console.log(row);
+                //console.log(name);
+                console.log(password);
+                res.render('./login.ejs', { error: 'Invalid email or password.', user: null });
+                console.log(err);
+            }
+        });
+    }
+ 
 
 
-//         db.get(sql, { $username: username, $password: password }, (err, row) => {
+    else {
+        let sql = `SELECT * FROM teachers WHERE username = $username AND password = $password`;
 
-//             console.log(row);
-//             if (err) {
-//                 // console.error(err.message);
-//                 res.render('./login.ejs', { user: null, error: err })
-//             }
 
-//             console.log(row);
-//             if (row) {
-//                 res.render('./header.ejs', { user: row });
-//             } else {
+        db.get(sql, { $username: username, $password: password }, (err, row) => {
 
-//                 console.log(row);
-//                 //console.log(name);
-//                 console.log(password);
-//                 res.render('./login.ejs', { error: 'Invalid email or password.', user: null });
-//                 console.log(err);
-//             }
-//         });
-//     }
+            console.log(row);
+            if (err) {
+                // console.error(err.message);
+                res.render('./login.ejs', { user: null, error: err })
+            }
 
-// });
+            console.log(row);
+            if (row) {
+                res.render('./header.ejs', { user: row });
+            } else {
+
+                console.log(row);
+                //console.log(name);
+                console.log(password);
+                res.render('./login.ejs', { error: 'Invalid email or password.', user: null });
+                console.log(err);
+            }
+        });
+    }
+
+});
 
 
 // app.get('/abc', (req, res) => {
@@ -416,10 +426,10 @@ app.post('/submit',  (req, res,next) => {
 
 
 
-
-
-
-
+// app.post("/connect", (req, res) => {
+//     req.session.destroy();
+//     res.render("homepage")
+// });
 
 
 
@@ -428,24 +438,6 @@ app.listen(PORT, (req, res) => {
     console.log(`server is listening on PORT number ${PORT}`);
 })
 
-const structure4 = `CREATE TABLE IF NOT EXISTS query(
-        
-    fname VARCHAR(50) NOT NULL,
-    lname VARCHAR(50) NOT NULL ,
-    email VARCHAR(50) NOT NULL,
-    message varchar(500) NOT NULL
-    )`;
-
-
-
-    db.run(structure4, err => {
-        if (err) {
-            return console.log(err.message);
-        }
-        console.log("Contact us Table created");
-    });
-
-    
     app.post('/connect', (req, res) => {
         const fname = req.body.fname;
         const lname = req.body.lname;
@@ -458,16 +450,8 @@ const structure4 = `CREATE TABLE IF NOT EXISTS query(
             email: email,
             message: message,
           });
-          contact.save();
-          res.redirect('/contactus')
-
-    
-    
-    
-    })
- 
-    
-    
+          contact.save();  
+         res.redirect('/contactus')
     
     })
     
