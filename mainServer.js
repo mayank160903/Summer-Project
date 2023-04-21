@@ -52,7 +52,14 @@ app.get("/login", (req, res) => {
 // })
 
 app.get('/register', (req, res) => {
-    res.render("Register", { user: null, error: null });
+
+     
+    if(req.session.isLoggedin == true){
+    res.render("homepage", { error: null });
+    }
+    else{
+        res.render("Register", { user: null, error: null });
+    }
     // res.redirect("/login");
 
 })
