@@ -8,14 +8,14 @@
 
 
 
-body {
+.body_replacement {
 	line-height: 1.5;
 	font-family: 'Poppins', sans-serif;
 }
 
 
 
-.container {
+.container3 {
 	max-width: 1170px;
 	margin: auto;
 }
@@ -25,7 +25,7 @@ body {
 	flex-wrap: wrap;
 }
 
-ul {
+.footer-col ul {
 	list-style: none;
 }
 

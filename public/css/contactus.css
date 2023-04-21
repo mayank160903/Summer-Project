@@ -1,4 +1,4 @@
-body{
+.wholepage{
 font-weight: 400;
 font-style: normal;
 font-size: 17px;
@@ -9,7 +9,7 @@ letter-spacing: 0px;
 background-color: #181a1b;
 }
 
-a {
+.wholepage a {
   transition: .2s ease-in-out;
   color: unset;
   text-decoration: unset !important;
