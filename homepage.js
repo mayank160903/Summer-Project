@@ -20,5 +20,3 @@ function playPause() {
 const openinsta = () => {
     
 }
-
-const try = 999
