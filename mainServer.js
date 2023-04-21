@@ -1,5 +1,6 @@
 const userSchema = require(__dirname + "/models/user.js");
 const contactSchema = require(__dirname + "/models/contact.js");
+const teacherSchema = require(__dirname + "/models/teacher.js");
 // const bcrypt = require("bcryptjs");
 
 
@@ -75,7 +76,11 @@ app.get('/Privacy', (req, res) => {
 
 
 app.get('/wishlist', (req, res) => {
-    res.render('wishlist');
+    if (req.session.isLoggedin == true){
+    res.render('wishlist',{user: req.session.user});
+    }
+
+    else res.render("login", { error: null });
 })
 
 
@@ -134,6 +139,7 @@ app.get("/faq", (req, res) => {
 });
 
 app.get("/profile", (req, res) => {
+    
     res.render("profile");
 })
 
@@ -151,7 +157,11 @@ app.get("/freelessons", (req, res) => {
 })
 
 app.get("/checkout", (req, res) => {
-    res.render("checkout");
+    if(req.session.isLoggedin = true){
+    res.render("checkout",{user: req.session.user});
+    }
+    else
+    res.render("login",{error: "You must be logged in"})
 })
 
 app.get("/catalogue", (req, res) => {
@@ -173,15 +183,6 @@ const db = new sqlite3.Database(db_name, err => {
     console.log("FSD Database Connected")
 });
 
-const structure = `CREATE TABLE IF NOT EXISTS users(
-    uid INTEGER PRIMARY KEY AUTOINCREMENT,
-    full_name VARCHAR(50) NOT NULL,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    email VARCHAR(50) NOT NULL,
-    role  VARCHAR(50) NOT NULL,
-    password VARCHAR(50) NOT  NULL,
-    confirm_password VARCHAR(50) NOT NULL
-    )`;
 
 const structure2 = `CREATE TABLE IF NOT EXISTS teachers(
     uid INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -193,16 +194,6 @@ const structure2 = `CREATE TABLE IF NOT EXISTS teachers(
     confirm_password VARCHAR(50) NOT NULL
     )`;
 
-
-
-
-
-db.run(structure, err => {
-    if (err) {
-        return console.log(err.message);
-    }
-    console.log("Table Created")
-})
 
 
 
@@ -261,16 +252,19 @@ app.post('/submit',  (req, res,next) => {
    
 
     if (role == 'user') {    
-        userSchema.findOne({$or:[{email: email},{username:username}]}).then((usercollection) => {
-            if (usercollection){
+       
+        teacherSchema.findOne({$or:[{email: email},{username:username}]}).then((teachercollection) => {
+
+            if(!teachercollection){
+                userSchema.findOne({$or:[{email: email},{username:username}]}).then((usercollection) => {
+                    if (usercollection){
                 if(usercollection.email === email){
                 console.log("Email Already in use")
                 return res.redirect('/register')}
                 
                 else 
                  console.log("Username already in use")
-                 return res.redirect('/register')}
-
+                        return res.redirect('/register')}
 
             else {
                 const person = new userSchema({
@@ -284,9 +278,13 @@ app.post('/submit',  (req, res,next) => {
                   res.redirect("/login");
                  
             }
-        }).catch((err) => {
-                console.log(err);
-              }); 
+        })
+        }
+
+        return res.redirect('/register')
+    
+    
+    })
         // userSchema.findOne({username:username}).then((usercollection) => {
         //     if(usercollection){
         //         console.log("Username already in use")
@@ -298,30 +296,33 @@ app.post('/submit',  (req, res,next) => {
 
     else {
 
-        let sql2 = `SELECT * FROM teachers WHERE username = ?`;
-        console.log(username);
-        db.run(sql2, [username], (err, row) => {
-            console.log(row);
-            if (err) {
-                console.log(err.message);
-                return res.render('./Register.ejs', { user: row, error: err });
-            } else if (row) {
-                return res.render('./Register.ejs', { user: row, error: null });
-            }
+        teacherSchema.findOne({$or:[{email: email},{username:username}]}).then((teachercollection) => {
+            if (teachercollection){
+                if(teachercollection.email === email){
+                console.log("Email Already in use")
+                return res.redirect('/register')}
+                
+                else 
+                 console.log("Username already in use")
+                 return res.redirect('/register')}
 
-            const sql = 'INSERT INTO teachers (full_name, username, email, role ,password ,confirm_password) VALUES (?, ?, ? , ? ,? ,?)';
-            db.run(sql, [full_name, username, email, role, password, confirm_password], (err) => {
-                if (err) {
-                    return res.render('./Register.ejs', { user: null, error: err });
-                }
-                console.log(`Message from teachers ${full_name} ${username} : ${email} ${role}  ${password} ${confirm_password}`);
-                return res.render('./login.ejs', { user: null, error: null });
-            });
+
+            else {
+                const teacher = new teacherSchema({
+                    fullname: full_name,
+                    username: username,
+                    email: email,
+                    password: password,
+                    phone: pno
+                  });
+                  teacher.save();
+                  res.redirect("/login");}
+
+
         });
 
-    }
-
-});
+    }}
+)
 
 app.post('/login', (req, res) => {
     
@@ -338,7 +339,10 @@ app.post('/login', (req, res) => {
                 if(usercollection.password === password) {
                 
                 req.session.isLoggedin = true;
-                req.session.user = usercollection; 
+                req.session.role = "user"
+                req.session.user = usercollection;
+                
+
                 console.log(req.session)
                 return req.session.save((err) => {
                 console.log(err);
@@ -389,29 +393,35 @@ app.post('/login', (req, res) => {
 
 
     else {
-        let sql = `SELECT * FROM teachers WHERE username = $username AND password = $password`;
 
-
-        db.get(sql, { $username: username, $password: password }, (err, row) => {
-
-            console.log(row);
-            if (err) {
-                // console.error(err.message);
-                res.render('./login.ejs', { user: null, error: err })
-            }
-
-            console.log(row);
-            if (row) {
-                res.render('./header.ejs', { user: row });
+        teacherSchema.findOne({username: username}).then((teachercollection) => {
+            if (!teachercollection) {
+                console.log("Invalid Username")
             } else {
-
-                console.log(row);
-                //console.log(name);
-                console.log(password);
-                res.render('./login.ejs', { error: 'Invalid email or password.', user: null });
+                
+                if(teachercollection.password === password) {
+                req.session.isLoggedin = true;
+                req.session.role = "teacher" 
+                req.session.user = teachercollection;
+                
+                console.log(req.session)
+                return req.session.save((err) => {
                 console.log(err);
+                return res.redirect("/");
+                  });
+            
+                }
+                else{
+                    console.log("Wrong Password");
+                    return res.render('./login.ejs', { error: 'Wrong Password.', user: null });
+
+                }
             }
-        });
+
+            res.render('./login.ejs', { error: 'Invalid Username.', user: null });
+        })
+        
+
     }
 
 });
