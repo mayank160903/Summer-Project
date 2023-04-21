@@ -1,6 +1,6 @@
 
 
-body{
+.bodyMain{
 margin: 0;
 padding: 0;
 color: rgb(211, 207, 202);
@@ -11,10 +11,9 @@ border-color: #736b5e;
 }
 
 .maincontainer{
-
 margin: 0 auto;
 max-width: 1360px;
-margin-top: 1.5rem;
+margin-top: 0.8rem;
 
 }
 .icn{
@@ -22,7 +21,7 @@ margin-top: 1.5rem;
     bottom: 180px;
     left: 180px;
 }
-.outer{
+.outer3{
     height: 100%;
     
 }
@@ -31,7 +30,7 @@ margin-top: 1.5rem;
     flex-direction: row;
     margin: 0 auto;
     padding: 0;
-    background-color:#181a1b;
+    
     max-width: 1204px;
   border-radius: 26px;
 }
@@ -62,6 +61,7 @@ padding: 12px 30px;
 min-width: 480px;
 font-size: 17px;
 font-weight: 500;
+border-radius: 0.6rem;
 border: 2px solid #e0e0e0;
 background-color: #181a1b;
 margin-bottom: 1rem;
@@ -73,7 +73,7 @@ margin-bottom: 1rem;
     flex-direction: row;
     min-width: 480px;
     border-radius: 1rem;
-    height: 200px;
+    height: 180px;
     background-color: #181a1b;
     margin-bottom: 0.8rem;
 }
@@ -89,7 +89,7 @@ margin-bottom: 1rem;
 }
 
 
-.title{
+.title2{
           font-size: 20px;
           font-weight: 300;
           white-space: nowrap;
@@ -100,7 +100,7 @@ margin-bottom: 1rem;
     opacity: 0.7;
     
 }
-.title:hover {
+.title2:hover {
     color: #2874f0;
     cursor: pointer;
   }
@@ -213,18 +213,15 @@ margin-bottom: 1rem;
     left: 8px;
 }
 
-.proftitle{
+
+.proftitle2{
     justify-self: right;
     position:relative;
     left: 100px;
-    bottom: -8px;
+    bottom: -1px;
     font-size: 1.0rem;
     color: white;
     font-weight: 600;
+    display: inline-grid;
 }
 
-.atb{
-    color: rgb(192, 186, 178);
-    background-color: #181a1b;
-padding: .75rem 1.25rem;
-}
