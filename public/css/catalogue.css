@@ -1,3 +1,53 @@
+
+
+
+head-slides{
+    margin-bottom: 20px;
+}
+
+.video_box{
+    /* background-color: black; */
+}
+.video-part{
+    background-color: #4076c1a8;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+#home-video{
+
+     width:480px;  
+     height: 560px; 
+     /* padding: 20px;  */
+ 
+}
+
+.our-team{
+    
+    display: inline-block;
+    /* text-align: center; */
+    margin-top: 120px;
+    font-family: 'Archivo Black', sans-serif;
+    /* padding: 20px; */
+}
+
+
+
+.our-team-header{
+    font-size: 30px;
+    color: white;
+    font-weight: bolder;
+}
+
+.our-team-content{
+    font-weight: lighter;
+    color: white;
+    font-size: 18px;
+}
+
+
 #heading{
     color: white;
 }
@@ -66,4 +116,19 @@ h6:hover{
 
 hr{
     color: ghostwhite;
+}
+
+.song-lesson-vid{
+    justify-content:center ;
+    background-color: white;
+    align-items: center;
+}
+
+
+.s-l-vid{
+    margin: 10px;
+    justify-content: center
+}
+.song-lessons{
+    background-color: #2b5476bf;
 }
