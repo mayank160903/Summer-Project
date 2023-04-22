@@ -8,8 +8,15 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/catalogue.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Shadows+Into+Light&family=Special+Elite&display=swap" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css2?family=Cabin&family=Lobster&family=Montserrat:ital,wght@1,100&family=Oswald:wght@300;400&family=Oxygen:wght@300;700&family=Prompt:wght@600&family=Quicksand:wght@300&family=Righteous&family=Secular+One&family=Tilt+Prism&display=swap" rel="stylesheet">
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
 
 
     </head>
@@ -18,6 +25,45 @@
 
 
       <%- include('header'); -%>
+
+
+      <div class="head-slides">
+        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="images/carousel-1.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="images/carousel-2.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="images/carousel-3.jpg" class="d-block w-100" alt="...">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+
+    </div>
+
+
+    <div class="video-part">
+      <div class="our-team">
+          <h1 class="our-team-header">GUITAR LESSONS</h1>
+          <h1 class="our-team-header" style="color:rgb(194, 42, 42);">THAT REALLY WORK</h1>
+          <p class="our-team-content">Learn guitar online with world-class instructors and</p>
+          <p class="our-team-content">become the best guitar player you can be.</p>
+          </div>
+      <div class = "video_box">
+          <video id="home-video" src="images/catalogue-video.mp4" type="video/mp4" controls></video>
+      </div>
+  </div>
 
 
         <nav class="navbar" id="navbar-id" style="background-color: rgba(37, 33, 33, 0.664);">
@@ -33,7 +79,7 @@
           <div class="beginner">
             <div class="title-seeall">
                 <div class="title">
-            <h1 style="color: rgb(255, 255, 255);">BEGINNER</h1>
+            <h1 style="color: rgb(255, 255, 255); font-family:'Quicksand', sand-serif;">BEGINNER</h1>
         </div>
         <div class="see-all">
             <button onclick="window.location.href = '/beginnercoursedesc' " class="see-all-button">
@@ -70,7 +116,7 @@
 
             <div class="title-seeall">
                 <div class="title">
-            <h1 style="color: rgb(255, 255, 255);">ROCK</h1>
+            <h1 style="color: rgb(255, 255, 255); font-family:'Quicksand', sand-serif;">ROCK</h1>
         </div>
         <div class="see-all">
             <button onclick="window.location.href = '/rockcoursedesc'" class="see-all-button">
@@ -138,7 +184,7 @@
           <div class="beginner">
             <div class="title-seeall">
                 <div class="title">
-            <h1 style="color: rgb(255, 255, 255);">METAL</h1>
+            <h1 style="color: rgb(255, 255, 255) ; font-family:'Quicksand', sand-serif;">METAL</h1>
         </div>
         <div class="see-all">
             <button class="see-all-button">
@@ -171,6 +217,24 @@
           </div>
           <br>
           <br>
+
+
+
+          <div class="song-lesson-vid">
+            <div class="our-team-header" style="color: black; text-align:center; padding:5px;">SONG LESSONS</div>
+            <div class = "s-l-vid">
+              <video style="height: 500px; width:900px;" id="home-video" src="images/song-lesson-vid.mp4" type="video/mp4" controls></video>
+          </div>
+          </div>
+
+
+
+          <div class="song-lessons">
+            <h1 class="our-team-header">ANATOMY OF SONG LESSONS</h1>
+            <img src="images/song-lesson-pic.png" style="height: 800px; width:1500px; padding:10px;">
+          </div>
+
+          
 
           <%- include('footer'); -%>
 
