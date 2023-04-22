@@ -119,6 +119,7 @@ hr{
 }
 
 .song-lesson-vid{
+    padding: 20px;
     justify-content:center ;
     background-color: white;
     align-items: center;
