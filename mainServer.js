@@ -2,6 +2,8 @@ const userSchema = require(__dirname + "/models/user.js");
 const contactSchema = require(__dirname + "/models/contact.js");
 const teacherSchema = require(__dirname + "/models/teacher.js");
 const coursesSchema = require(__dirname + "/models/course.js");
+
+
 // const bcrypt = require("bcryptjs");
 
 
@@ -11,7 +13,10 @@ const app = express();
 const ejs = require("ejs");
 const sqlite3 = require('sqlite3');
 const mongoose = require("mongoose");
+const bodyParser = require('body-parser');
 const session=require("express-session");
+
+const { homedir } = require('os');
 
 
 // const { collection } = require('./models/user');
@@ -20,6 +25,7 @@ const session=require("express-session");
 const db_name = path.join(__dirname, "data", "Music.db");
 
 // app.use(express.static(path.join(__dirname, "public")));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'));
 app.use('/css', express.static(__dirname + 'public/css'));
@@ -146,8 +152,16 @@ app.get('/spotlight', (req, res) => {
 
 app.get("/", (req, res) => {
     // req.session.isLoggedin
-    console.log(res.locals)
     res.render("homepage");
+})
+
+app.get('/homepage', (req, res) => {
+    res.render('homepage');
+});
+
+
+app.get("/purchase/homepage", (req, res) => {
+    res.redirect("/homepage");
 })
 
 
@@ -195,12 +209,84 @@ app.get("/freelessons", (req, res) => {
 })
 
 app.get("/checkout", (req, res) => {
-    if(req.session.isLoggedin = true){
-    res.render("checkout",{user: req.session.user});
+    if(req.session.isLoggedin == true){
+    res.render("homepage");
     }
     else
     res.render("login",{error: "You must be logged in"})
 })
+
+app.get("/checkout/:coursename", (req, res) => {
+    
+    if(req.session.isLoggedin == true){
+
+    courseid = req.params.coursename
+
+    coursesSchema.findOne({_id: courseid}).then((doc) => {
+        if (!doc) {
+            res.render("/")  // 404 page sey replace krdena
+        } else{
+            doc.populate('teacher','fullname').then((fin1)=>{
+            res.render("checkout",{user: req.session.user,course:fin1})     
+        })}
+    });     
+}
+
+    else
+    res.render("login",{error: "You must be logged in"})
+})
+
+
+app.post("/purchase/:coursename",(req,res) =>{
+    
+    cuser = req.session.user
+    cid = req.params.coursename
+    console.log(typeof(cid))
+    
+
+userSchema.findOne({username: cuser.username}).then((doc) => {
+   if(!doc){       
+       res.render("homepage",{error: "You must be logged in"})
+    } 
+    
+    else {
+        
+        coursesSchema.findOne({_id : cid}).then((purchased_course)=>{
+            if(!purchased_course){
+                    res.render("homepage",{error: "Course Doesn't Exist"})
+                }
+                else{
+                    let purchased_arr = doc.purchased
+                    let wishlist = doc.wishlist
+
+                    if (purchased_arr.includes(purchased_course._id)){
+                        console.log('Already Purchased The Course');
+                        return res.redirect("homepage")
+                      }
+
+                    if(wishlist.includes(purchased_course._id)){
+                        let index = wishlist.indexOf(purchased_course._id);
+                        wl1 = wishlist.splice(index, 1);
+                        console.log(wl1)
+                        userSchema.findByIdAndUpdate(doc._id,{wishlist:wishlist},{new:true}).then(()=>{
+                        console.log("Removed From Wishlist")
+                        })
+                    }
+
+                    purchased_arr.push(purchased_course._id)
+                    userSchema.findByIdAndUpdate(doc._id, {purchased: purchased_arr},{new:true}).then((rslt) => {
+                    console.log(purchased_arr)
+                    return res.redirect("homepage")           
+                })}
+
+            })}
+
+     
+   })
+})
+
+
+
 
 app.get("/catalogue", (req, res) => {
     res.render("catalogue");
@@ -377,6 +463,7 @@ app.post('/login', (req, res) => {
                 console.log(req.session)
                 return req.session.save((err) => {
                 console.log(err);
+            
                 return res.redirect("/");
                   });
             
@@ -478,6 +565,8 @@ app.get("/logout", (req, res) => {
     req.session.destroy();
     console.log('over')
     res.render("homepage")
+
+
 });
 
 
