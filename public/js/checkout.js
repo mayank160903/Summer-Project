@@ -1,3 +1,5 @@
+
+
 function copytoclip(t) {
 
     navigator.clipboard.writeText(t);
@@ -52,3 +54,6 @@ function confrm(){
   document.getElementById("good90").style.display = "block"
 }}
 
+function piiche(){
+  window.history.back();
+}
