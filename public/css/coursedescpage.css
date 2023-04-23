@@ -1,9 +1,15 @@
 *{
     box-sizing: border-box;
+    font-family: 'Quicksand', sans-serif;
+    color: white;
 }
 
+
+.content-bg{
+  background-color: black;
+}
 body{
-    color: #6b7385;
+    color: #454545;
     font-weight: 400;
     line-height: 1.5;
 }
@@ -31,7 +37,7 @@ p{
 }
 
 .course-title h1{
-  color: white;
+  color: rgba(255, 255, 255, 0);
 max-width: 118.4rem;
 font-weight: 600;
 line-height: 1.3;
@@ -40,8 +46,25 @@ letter-spacing: -.02rem;
 font-family: udemy sans,sf pro text,-apple-system,Roboto,segoe ui,Helvetica,Arial,sans-serif,apple color emoji;
 }
 
+
+.container-img{
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.bottom-right {
+  color: black;
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
+
+
+
 .course-box{
-box-shadow: 0px 6px 34px rgba(215, 216, 222, 0.41);
+box-shadow: 0px 6px 34px rgba(255, 255, 255, 0);
+background-color: white;
 padding: 30px;
 border-radius: 6px;
 margin-top: 1.5rem;
@@ -55,6 +78,7 @@ margin-top: 1.5rem;
 }
 
 .course-info{
+  font-family: 'Archivo Black', sans-serif;
   
 }
 .course-info p{
@@ -71,6 +95,9 @@ font-family: udemy sans,sf pro text,-apple-system,BlinkMacSystemFont,Roboto,sego
   font-size: 16px;
 }
 
+a{
+  
+}
 
 .course-leftbar{
  
@@ -109,7 +136,7 @@ padding-bottom: 20px;
     word-break: break-word;
     margin: 0;
     font-family: "Euclid Circular", Arial, sans-serif;
-    color: #192335;
+    color: #464646;
 }
 
 
@@ -135,7 +162,7 @@ padding-bottom: 20px;
     margin: 7px 0;
     margin-top: 7px;
     line-height: 1.45;
-    color: #6b7385;
+    color: #373737;
   }
 
   .greentick{
@@ -158,7 +185,7 @@ padding-bottom: 20px;
     .show-more{
         font-size: 14px;
         font-weight: 700;
-        color: #2f57ef;
+        color: #ffffff;
         display: block;
         margin-top: 5px;
         position: relative;
@@ -188,7 +215,7 @@ padding-bottom: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  color: #1c1d1f;
+  color: #b00101;
   font-size: 16px;
   padding-top: 1rem;
 }
@@ -199,17 +226,17 @@ padding-bottom: 20px;
       .numb{
         font-weight: 800;
         font-size: 64px;
-        color: black;
+        color: rgb(31, 31, 31);
         line-height: 60px;
         margin-bottom: 10px;
       }
       .checked {
-        color: #FF8F3C
+        color: #ff6f00
       }
       
       .gb{
           font-weight: 700;
           font-size: 16px;
           line-height: 26px;
-          color: #FF8F3C;
+          color: #ff6f00;
       }
