@@ -11,12 +11,20 @@
     font-family: 'Poppins', sans-serif;
 }
 
+.bg-pic{
+    background-image: url(../images/register-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-origin: content-box;
+
+}
 
 
 
 .register {
 
-    background: -webkit-linear-gradient(left, #e6e9f0, #eef1f5);
+    
+    /* background: -webkit-linear-gradient(left, #000000, #000000); */
     margin-top: 3%;
     padding: 3%;
 }
@@ -26,15 +34,15 @@
 
 
 .register-left {
-    background: #f8f9fa;
+    background: #46464695;
     border-top-left-radius: 10% 50%;
     border-bottom-left-radius: 10% 50%;
 }
 
-.icon {
-    height: 40%;
-    width: 60%;
-    border-radius: 10rem;
+.icon-2 {
+    height: 600px;
+    width: 400px;
+    
 
 }
 
@@ -103,12 +111,35 @@
     text-align: center;
     margin-top: 8%;
     margin-bottom: -15%;
-
+    font-family: 'Bruno Ace', cursive;
     color: #0062cc;
 
 }
 
+/* img{
+    opacity: 0.6;
+} */
 
+.container-2{
+    position: relative;
+  text-align: center;
+  color: rgb(255, 255, 255);
+}
+
+.centered {
+  
+
+    font-size: 25px;
+    font-weight: bold ;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+.reg-button{
+    font-family: 'Bruno Ace', cursive;
+}
 #container {
     position: absolute;
     margin: auto;
