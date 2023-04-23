@@ -1,6 +1,7 @@
 const userSchema = require(__dirname + "/models/user.js");
 const contactSchema = require(__dirname + "/models/contact.js");
 const teacherSchema = require(__dirname + "/models/teacher.js");
+const coursesSchema = require(__dirname + "/models/course.js");
 // const bcrypt = require("bcryptjs");
 
 
@@ -35,9 +36,35 @@ app.use(session({
     saveUninitialized: false,
     
 }))
-// app.get("/", (req, res) => {
-//     res.render("home");
-// })
+
+
+const mongodbURI="mongodb://127.0.0.1:27017/MastersOfMusic"
+
+mongoose.connect(mongodbURI).then(()=>{
+    console.log("MongoDB Connected!");
+})
+.catch((err)=>{
+    console.log("Error connecting")
+})
+
+// app.use((req, res, next) => {
+//     if (!req.session.user) return next();
+//     const user  = req.session;
+//     userSchema.findById(user._id).then(user1 => {
+
+//         req.user = user1;
+//         next();
+//       })
+//       .catch(error => console.log(error));
+//   });
+  
+//   // Fields set in every render.
+//   app.use((req, res, next) => {
+//     res.locals.isLoggedin = req.session.isLoggedIn;
+//     next();
+//   });
+
+
 app.get("/login", (req, res) => {
     
     if(req.session.isLoggedin == true){
@@ -77,8 +104,19 @@ app.get('/Privacy', (req, res) => {
 
 app.get('/wishlist', (req, res) => {
     if (req.session.isLoggedin == true){
-    res.render('wishlist',{user: req.session.user});
-    }
+         userSchema.findOne({username : req.session.user.username}).then( user =>  {
+            user.populate({
+                path: 'wishlist',
+                populate:{
+                    path: 'teacher'
+
+                }
+            }).then(()=>{
+            res.render('wishlist',{user: user})
+        })}
+        )}
+        
+    
 
     else res.render("login", { error: null });
 })
@@ -108,7 +146,7 @@ app.get('/spotlight', (req, res) => {
 
 app.get("/", (req, res) => {
     // req.session.isLoggedin
-    console.log(req.session)
+    console.log(res.locals)
     res.render("homepage");
 })
 
@@ -232,13 +270,6 @@ db.run(structure2, err => {
 
 
 
-const mongodbURI="mongodb://127.0.0.1:27017/MastersOfMusic"
-mongoose.connect(mongodbURI).then(()=>{
-    console.log("MongoDB Connected!");
-})
-.catch((err)=>{
-    console.log("Error connecting")
-})
 
 app.post('/submit',  (req, res,next) => {
     
@@ -443,10 +474,10 @@ app.post('/login', (req, res) => {
 
 
 
-// app.post("/connect", (req, res) => {
-//     req.session.destroy();
-//     res.render("homepage")
-// });
+app.get("/logout", (req, res) => {
+    req.session.destroy();
+    res.render("homepage")
+});
 
 
 

@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'>    
     <link rel = "stylesheet" href = "css/wishlist.css">
     <script src = "js/script.js"></script>
  
@@ -17,7 +18,7 @@
     <div>
         <div class="maincontainer">
             <div class="wishmain d-flex ">
-                <div class="d-none d-xl-block">
+                <div class="d-none d-xl-block mb-5">
                     <div class="">
                         <div class="card" style="width: 18rem; background-color: #181a1b;">
                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAACoCAMAAABt9SM9AAAAA1BMVEUAlv+tY//LAAAAR0lEQVR4nO3BAQEAAACCIP+vbkhAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO8GxYgAAb0jQ/cAAAAASUVORK5CYII=" class="card-img-top" alt="...">
@@ -31,12 +32,12 @@
                               <h5 class="proftitle2 align-items-end" >Welcome, <%=user.fullname.split(' ')[0]%></h5>
                             </div>
                             <ul class="list-group list-group-flush" style="font-size: 16px;">
-                              <li class="list-group-item atb" style=" border-bottom: 2px solid grey; background-color: #181a1b;">Your Profile</li>
-                              <li class="list-group-item atb" style="border-bottom: 2px solid grey;  background-color: #181a1b;">Wishlist</li>
+                              <li class="list-group-item atb" style=" border-bottom: 2px solid grey; background-color: #181a1b;"><a href = "">Your Profile</a></li>
+                              <li class="list-group-item atb" style="border-bottom: 2px solid grey;  background-color: #181a1b;"><a href = "/wishlist"> Wishlist</a></li>
                               <li class="list-group-item atb" style="border-bottom: 2px solid grey;  background-color: #181a1b;">Your Courses</li>
-                              <li class="list-group-item atb" style="border-bottom: 2px solid grey;  background-color: #181a1b;">Home</li>
+                              <li class="list-group-item atb" style="border-bottom: 2px solid grey;  background-color: #181a1b;"><a href = "/">Home</a></li>
                               
-                              <li class="atb list-group-item" style="border-bottom: 2px solid grey;  background-color: #181a1b;">Log Out</li>
+                              <li class="atb list-group-item" style="border-bottom: 2px solid grey;  background-color: #181a1b;"><a href = "/logout" id = "logoutbtn">Log Out</a></li>
                             </ul>
 
                             
@@ -53,10 +54,13 @@
                             <div class="rhead">
                                <div class=""> Your Wishlist (<%=user.wishlist.length %>)</div>
                             </div>
+                          
+                          
 
-                            <div class="wishblock">
+                            <% for (let i = 0;i<user.wishlist.length;i++){ %>
+                              <div class="wishblock">
                                 <div class="imgcontainer">
-                                    <img src = "https://images.pexels.com/photos/1407322/pexels-photo-1407322.jpeg"  class = "course-img img-fluid"
+                                    <img src = <%=user.wishlist[i].imageUrl %>  class = "course-img img-fluid"
                                     width="230px">
                                 
                          
@@ -64,11 +68,11 @@
 
                                 <div class="wishitemleft d-flex flex-column">
                                   <div class="title2">
-                                    <a>Learn Guitar In 30 Days by Musician XYZ </a>
+                                    <a><%= user.wishlist[i].title %></a>
                                   </div>
 
                                   <div class="teacher">
-                                    <a>By Music Teacher 2</a>
+                                    <a>By <%= user.wishlist[i].teacher[0].fullname %></a>
                                   </div>
 
                                   <div class="rating">
@@ -84,95 +88,29 @@
                                   </div>
 
                                   <div class="price">
-                                    <div><p>$19.99</p></div>
+                                    <div><p>$<%= user.wishlist[i].price %></p></div>
                                   </div>
                                 </div>
 
                                 <div class="rightitembar">
+                                    <i class="bi bi-trash delicon" id = 'delete1'></i>
                                     <button class="buy-now" onclick="window.location.href = '/checkout' ">Buy Now</button>
 
                                 </div>
                             </div>
-                            <div class="wishblock">
-                              <div class="imgcontainer">
-                                  <img src = "https://images.pexels.com/photos/1407322/pexels-photo-1407322.jpeg"  class = "course-img img-fluid"
-                                  width="230px">
-                              
-                       
-                              </div>
-
-                              <div class="wishitemleft d-flex flex-column">
-                                <div class="title2">
-                                  <a>Learn Guitar In 30 Days by Musician XYZ </a>
-                                </div>
-
-                                <div class="teacher">
-                                  <a>By Music Teacher 1</a>
-                                </div>
-
-                                <div class="rating">
-                                  <div class="rate pt-1">
-                                      <label for="star5" title2="text">5 stars</label>
-                                      <label for="star4" title2="text">4 stars</label>
-                                      <label for="star3" title2="text">3 stars</label>
-                                      <label for="star2" title2="text">2 stars</label>
-                                      <label for="star1" title2="text">1 star</label>
-                                      
-                                    </div>
-                                    
-                                </div>
-
-                                <div class="price">
-                                  <div><p>$19.99</p></div>
-                                </div>
-                              </div>
-
-                              <div class="rightitembar">
-                              <button class="buy-now" onclick="window.location.href = '/checkout' " role="button">Buy Now</button>
+                            <%}%>
 
 
-                              </div>
-                          </div>
-
+                            <% if (user.wishlist.length === 0){ %>
+                            <div class = "nothinginwish">Your Wishlist is Empty!</div>
+                            
+                            <%}%>
                             
 
-                            <div class="wishblock">
-                                <div class="imgcontainer">
-                                    <img src = "https://images.pexels.com/photos/1407322/pexels-photo-1407322.jpeg"  class = "course-img img-fluid" width="230px">
-                                </div>
-
-                                <div class="wishitemleft d-flex flex-column">
-                                  <div class="title2">
-                                    <a>Learn Guitar In 30 Days by Musician XYZ </a>
-                                  </div>
-
-                                  <div class="teacher">
-                                    <a>By Music Teacher 2</a>
-                                  </div>
-
-                                  <div class="rating">
-                                    <div class="rate pt-1">
-                                        <label for="star5" title2="text">5 stars</label>
-                                        <label for="star4" title2="text">4 stars</label>
-                                        <label for="star3" title2="text">3 stars</label>
-                                        <label for="star2" title2="text">2 stars</label>
-                                        <label for="star1" title2="text">1 star</label>
-                                        
-                                      </div>
-                                      
-                                  </div>
-
-                                  <div class="price">
-                                    <div><p>$19.99</p></div>
-                                  </div>
-                                </div>
-
-                                <div class="rightitembar">
-                                    <button class="buy-now" onclick="window.location.href = '/checkout' ">Buy Now</button>
-
-                                </div>
+              
                             
-                                </div>
+
+                  
                             </div>
                         </div>
                     </div>

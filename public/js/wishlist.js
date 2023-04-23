@@ -13,7 +13,3 @@ app.get("/", function (req, res) {
 app.get("/index", function (req, res) {
   res.render("magic");
 });
-
-app.listen(8080, function () {
-  console.log("Server is running on port 8080 ");
-});
