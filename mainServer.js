@@ -146,6 +146,21 @@ app.post("/remove-wishlist/:Id",async (req,res)=>{
         })
     
 })
+app.get('/coursedescpage/:courseid', (req, res) => {
+
+    courseid = req.params.courseid
+
+    coursesSchema.findOne({_id: courseid}).then((course) => {
+        if (!course) {
+            res.render("/")  // 404 page sey replace krdena
+        } else{
+            course.populate('teacher').then((course)=>{
+                console.log(course)
+                
+            res.render("coursedescpage",{user: req.session.user,course:course,auth:req.session.isLoggedin})     
+        })}
+    });
+})
 
 app.post("/purchase/:coursename",(req,res) =>{
     
