@@ -94,7 +94,7 @@
 
                                 <div class="rightitembar">
                                   
-                                    <form id="del" method="DELETE" action="/remove-wishlist">
+                                    <form id="del" method="POST" action="/remove-wishlist/<%= user.wishlist[i]._id %>">
                                     <input type="hidden" name="del-item">
                                     <div onclick="document.getElementById('del').submit();" style="padding-left: 2rem;">
                                       <i class="bi bi-trash delicon" id = 'delete1'></i></div>

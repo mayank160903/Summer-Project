@@ -19,6 +19,7 @@ const session=require("express-session");
 const { homedir } = require('os');
 
 
+
 // const { collection } = require('./models/user');
 // const { collection } = require('./models/contact');
 
@@ -236,6 +237,38 @@ app.get("/checkout/:coursename", (req, res) => {
     res.render("login",{error: "You must be logged in"})
 })
 
+app.post("/remove-wishlist/:Id",async (req,res)=>{
+    
+    
+    cid = req.params.Id
+    
+    await coursesSchema.findOne({_id : cid}).then((purchased_course)=>{
+        if(!purchased_course){
+                res.render("homepage",{error: "Course Doesn't Exist"})
+            }
+            else{
+                doc = req.session.user
+                let wishlist = doc.wishlist
+                console.log(wishlist)
+                console.log(purchased_course._id)
+                
+                    let index = wishlist.indexOf(purchased_course._id);
+                    wl1 = wishlist.splice(index, 1);
+                    
+                    userSchema.findByIdAndUpdate(doc._id,{wishlist:wishlist},{new:true}).then(()=>{
+                    console.log("Removed From Wishlist")
+                    res.render("privacy")
+                })
+                
+
+                
+       
+            }
+
+        })
+    
+})
+
 
 app.post("/purchase/:coursename",(req,res) =>{
     
@@ -259,11 +292,6 @@ userSchema.findOne({username: cuser.username}).then((doc) => {
                     let purchased_arr = doc.purchased
                     let wishlist = doc.wishlist
 
-                    if (purchased_arr.includes(purchased_course._id)){
-                        console.log('Already Purchased The Course');
-                        return res.redirect("homepage")
-                      }
-
                     if(wishlist.includes(purchased_course._id)){
                         let index = wishlist.indexOf(purchased_course._id);
                         wl1 = wishlist.splice(index, 1);
@@ -272,6 +300,13 @@ userSchema.findOne({username: cuser.username}).then((doc) => {
                         console.log("Removed From Wishlist")
                         })
                     }
+
+                    if (purchased_arr.includes(purchased_course._id)){
+                        console.log('Already Purchased The Course');
+                        return res.redirect("homepage")
+                      }
+
+                   
 
                     purchased_arr.push(purchased_course._id)
                     userSchema.findByIdAndUpdate(doc._id, {purchased: purchased_arr},{new:true}).then((rslt) => {
