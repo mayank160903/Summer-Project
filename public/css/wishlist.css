@@ -227,6 +227,16 @@ margin-bottom: 1.6rem;
     
 }
 
+.courselink{
+    color: white; 
+    text-decoration: none;
+}
+
+.courselink:hover{
+    color: #2874f0;
+    transform: scale(1.09);
+}
+
 .delicon{
     display: inline-block;
     width: 20px;
