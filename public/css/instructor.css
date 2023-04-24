@@ -48,6 +48,16 @@
 
 
 
+.img-size{
+    height: 150px;
+    width: 600px;
+}
+
+.card-bg{
+    background-color: #2f3256;
+}
+
+
 .course-heading{
     color: white;
     font-weight: bolder;
@@ -59,6 +69,7 @@
 }
 
 .inst-grid{
+    font-family: 'Quicksand', sans-serif;
    
 }
 
