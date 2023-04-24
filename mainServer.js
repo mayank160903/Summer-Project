@@ -130,12 +130,29 @@ app.get('/wishlist', (req, res) => {
 
 
 app.get('/coursepage', (req, res) => { 
-    res.render('coursepage');
+    res.render('/coursepage');
 })
 
 app.get('/coursedescpage', (req, res) => {
-    res.render('coursedescpage');
+    res.render('homepage') 
 })
+
+app.get('/coursedescpage/:courseid', (req, res) => {
+
+    courseid = req.params.courseid
+
+    coursesSchema.findOne({_id: courseid}).then((course) => {
+        if (!course) {
+            res.render("/")  // 404 page sey replace krdena
+        } else{
+            course.populate('teacher').then((course)=>{
+                console.log(course)
+                
+            res.render("coursedescpage",{user: req.session.user,course:course,auth:req.session.isLoggedin})     
+        })}
+    });
+})
+
 
 
 
@@ -222,15 +239,23 @@ app.get("/checkout/:coursename", (req, res) => {
     if(req.session.isLoggedin == true){
 
     courseid = req.params.coursename
+    user1 = req.session.user
 
-    coursesSchema.findOne({_id: courseid}).then((doc) => {
+    coursesSchema.findOne({_id: courseid}).then(async (doc) => {
         if (!doc) {
             res.render("/")  // 404 page sey replace krdena
         } else{
-            doc.populate('teacher','fullname').then((fin1)=>{
-            res.render("checkout",{user: req.session.user,course:fin1})     
-        })}
-    });     
+
+            let index = user1.purchased.indexOf(courseid);
+            console.log(courseid,user1.purchased)
+
+
+          doc.populate('teacher','fullname').then((fin1)=>{
+            res.render("checkout",{user: user1,course:fin1})     
+        })
+        
+
+    }});     
 }
 
     else
@@ -257,12 +282,8 @@ app.post("/remove-wishlist/:Id",async (req,res)=>{
                     
                     userSchema.findByIdAndUpdate(doc._id,{wishlist:wishlist},{new:true}).then(()=>{
                     console.log("Removed From Wishlist")
-                    res.render("privacy")
+                    res.redirect("/wishlist")
                 })
-                
-
-                
-       
             }
 
         })
@@ -412,11 +433,11 @@ app.post('/submit',  (req, res,next) => {
                     if (usercollection){
                 if(usercollection.email === email){
                 console.log("Email Already in use")
-                return res.redirect('/register')}
+                return res.render('/register')}
                 
                 else 
                  console.log("Username already in use")
-                        return res.redirect('/register')}
+                        return res.render('/register')}
 
             else {
                 const person = new userSchema({
@@ -427,7 +448,7 @@ app.post('/submit',  (req, res,next) => {
                     phone: pno
                   });
                   person.save();
-                  res.redirect("/login");
+                  res.render("/login");
                  
             }
         })
