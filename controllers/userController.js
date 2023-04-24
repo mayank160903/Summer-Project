@@ -1,6 +1,6 @@
 const teacherSchema = require('../models/teacher.js');
 const userSchema = require('../models/user.js');
-const courses = require('../models/courseModel.js');
+const courses = require('../models/course.js');
 
 
 
@@ -13,10 +13,11 @@ exports.register = async (req, res, next) => {
 
     const password = req.body.password;
     const confirm_password = req.body.confirm_password;
-
+    
     
     try{
-        if(role=='user'){
+        
+        if(role==='user'){
             const existingteacher = await teacherSchema.findOne({$or:[{email: email},{username:username}]})
 
 
@@ -31,15 +32,15 @@ exports.register = async (req, res, next) => {
                         phone: pno
                       });
                       person.save();
-                    return res.render('homepage');
+                    return res.render('login',{error:null});
                 }
                 else{
 
-                    return res.render('register');
+                    return res.render('register',{user: null,error:null});
                 }
             }
             else{
-                return res.render('register');
+                return res.render('register',{user: null,error:null});
             }
 
 
@@ -48,9 +49,13 @@ exports.register = async (req, res, next) => {
 
         }
         else{
+            
             const existinguser = await userSchema.findOne({$or:[{email: email},{username:username}]});
             if(!existinguser){
-                const existingteacher = teacherSchema.findOne({$or:[{email: email},{username:username}]});
+                
+                
+                const existingteacher = await teacherSchema.findOne({$or:[{email: email},{username:username}]});
+                
                 if(!existingteacher){
                     const teacher = new teacherSchema({
                         fullname: full_name,
@@ -59,15 +64,16 @@ exports.register = async (req, res, next) => {
                         password: password,
                         phone: pno
                       });
+                      
                       await teacher.save();
-                      return res.render('homepage');
+                      return res.render('login',{error:null});
                 }
                 else{
-                    return res.render('register');
+                    return res.render('register',{user: null,error:null});
                 }
             }
             else{
-                return res.render('register');
+                return res.render('register',{user: null,error:null});
             }
         }
 
