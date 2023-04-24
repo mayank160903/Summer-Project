@@ -93,6 +93,18 @@ exports.forgotPassword = async (req, res) => {
     return res.render('forgotPassword');
 }
 
+exports.teacher-profile = async (req, res) => {
+    return res.render('teacher-profile');
+}
+
+exports.student-profile = async (req, res) => {
+    return res.render('student-profile');
+}
+
+exports.upload-course = async (req, res) => {
+    return res.render('upload-course');
+}
+
 exports.Privacy = async (req, res) => {
     return res.render('Privacy');
 }
