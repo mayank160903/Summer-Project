@@ -10,6 +10,12 @@ const teacherSchema = new Schema({
   email: { type: String, required: true },
   phone: { type: Number, required: true},
   password: { type: String, required: true },
+  courses : [
+    {
+        type: mongoose.ObjectId,
+        ref: "courses",
+    },
+],
 });
 
 
