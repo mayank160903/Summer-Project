@@ -59,7 +59,9 @@ app.get('/register', (req, res) => {
 
 app.get('/wishlist', (req, res) => {
     if (req.session.isLoggedin == true){
+        
          userSchema.findOne({username : req.session.user.username}).then( user =>  {
+            
             user.populate({
                 path: 'wishlist',
                 populate:{
@@ -67,6 +69,7 @@ app.get('/wishlist', (req, res) => {
 
                 }
             }).then(()=>{
+                
             res.render('wishlist',{user: user})
         })}
         )}
@@ -83,7 +86,7 @@ app.get("/", (req, res) => {
 })
 
 app.get("/contactus", (req, res) => {
-    req.session.destroy()
+    
     res.render("contactus");
 });
 
@@ -161,6 +164,15 @@ app.get('/coursedescpage/:courseid', (req, res) => {
         })}
     });
 })
+
+app.get("/catalogue", (req, res) => {
+    if(req.session.isLoggedin == true){
+    res.render("catalogue");
+    }
+    else{
+        res.render("login",{error:null})
+    }
+});
 
 app.post("/purchase/:coursename",(req,res) =>{
     
@@ -299,4 +311,3 @@ const PORT = 8000;
 app.listen(PORT, (req, res) => {
     console.log(`server is listening on PORT number ${PORT}`);
 })
-
