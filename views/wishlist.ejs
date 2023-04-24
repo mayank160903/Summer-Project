@@ -93,8 +93,15 @@
                                 </div>
 
                                 <div class="rightitembar">
-                                    <i class="bi bi-trash delicon" id = 'delete1'></i>
-                                    <button class="buy-now" onclick="window.location.href = '/checkout' ">Buy Now</button>
+                                  
+                                    <form id="del" method="POST" action="/remove-wishlist/<%= user.wishlist[i]._id %>">
+                                    <input type="hidden" name="del-item">
+                                    <div onclick="document.getElementById('del').submit();" style="padding-left: 2rem;">
+                                      <i class="bi bi-trash delicon" id = 'delete1'></i></div>
+                                    </form>
+                                    
+                                    
+                                    <button class="buy-now" onclick="window.location.href = '/checkout/<%=user.wishlist[i]._id %>' ">Buy Now</button>
 
                                 </div>
                             </div>

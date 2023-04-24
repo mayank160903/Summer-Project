@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel = "stylesheet" href = "css/checkout.css">
+    <link rel = "stylesheet" href = "/css/checkout.css">
     <link href="https://unpkg.com/pattern.css" rel="stylesheet">
-    <script src="js/checkout.js"></script>
+    <script src="/js/checkout.js"></script>
+	<script>
+		function apd(id){
+			return "/purchase/"+id
+		}
+	</script>
     <title>Check Out</title>
 </head>
 <body>
@@ -14,26 +19,27 @@
 <div class="center-wrapper">
 	<div class="content">
 	
-	<div class="top-bar">
+	<div class="top-bar"><div>
 		<i class="fas fa-arrow-left"></i>
-		<span class="bb"> Go Back</span>
+		<span class="bb" onclick="piiche()"> Go Back</span>
+	</div>
 	</div>
 
 	<div class="bag-product pt-4">
 		<div class="course_img">
-			<img src="https://images.pexels.com/photos/1407322/pexels-photo-1407322.jpeg" class = "img1">
+			<img src= <%= course.imageUrl %> class = "img1">
 		</div>
 		<div class="description">
-			<p class="product-code small" style="color: grey;">Product code: SS022592000</p>
-			<h1>Learn Guitar in 3 Days</h1>
-			<p class="teacher">By Music teacher 3</p>
-			<p class="course-info">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, necessitatibus?</p>
+			<p class="product-code small" style="color: grey;">Product code: <%= course._id %></p>
+			<h1><%= course.title %></h1>
+			<p class="teacher">By <%= course.teacher[0].fullname %></p>
+			<p class="course-info"><%= course.description %></p>
 		</div>
 	</div>
 	<div class="bag-total">
 		<div class="total">
 			<h3>Price:</h3>
-			<h3>$14.99</h3>
+			<h3>$<%= course.price %></h3>
 		</div>
 		<div class="" style = "margin: 1rem 0;" id="abracadbra">
 			<input type="checkbox" name="promo-check" id = "mycheck">
@@ -55,10 +61,17 @@
 		<div class="promo-code" id="promo_input">
 			<input type="text" name="promo-checkbox" id = "promo" placeholder="Enter your promo code here">
 			<button class="apply" onclick="confrm()">Apply</button>
+
+
 		</div>
-		<button class="checkbtn" id = "chkout" onclick="confrm()">
+		
+		<form action="/purchase/<%= course._id %>" method="post">
+		<button class = "checkbtn" type = "submit" id = "chkout">
 			<div>Proceed to Checkout</div>
-		</button>
+		</button></form>
+		 <!-- <input class = "checkbtn" type="submit" value="Proceed To Checkout"> -->
+		 </input
+	</form>
 	</div>
 	<div style="text-align: center; 
     margin-bottom: 2rem; margin-top: 0.7rem;">
