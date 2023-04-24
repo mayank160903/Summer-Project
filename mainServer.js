@@ -133,6 +133,16 @@ app.get('/coursepage', (req, res) => {
     res.render('/coursepage');
 })
 
+
+app.get('/teacher-profile', (req, res) => { 
+    res.render('teacher-profile');
+})
+
+app.get('/student-profile', (req, res) => { 
+    res.render('student-profile');
+})
+
+
 app.get('/coursedescpage', (req, res) => {
     res.render('homepage') 
 })
