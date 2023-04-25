@@ -20,6 +20,12 @@ router.get('/spotlight' , spotlight)
 
 router.get('/aboutus' , aboutus);
 
+router.get('/teacher-profile', teacher-profile);
+
+router.get('/student-profile', student-profile);
+
+router.get('/upload-course', upload-course);
+
 router.get('/rockcoursedesc' , rockcoursedesc);
 
 router.get('/beginnercoursedesc' , beginnercoursedesc);

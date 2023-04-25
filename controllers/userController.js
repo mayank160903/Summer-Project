@@ -22,6 +22,7 @@ exports.register = async (req, res, next) => {
 
 
             if(!existingteacher){
+                
                 const existinguser = await userSchema.findOne({$or:[{email: email},{username:username}]})
                 if(!existinguser){
                     const person = new userSchema({
@@ -29,7 +30,7 @@ exports.register = async (req, res, next) => {
                         fullname: full_name,
                         email: email,
                         password: password,
-                        phone: pno
+                        phone: pno,
                       });
                       person.save();
                     return res.render('login',{error:null});
@@ -42,10 +43,6 @@ exports.register = async (req, res, next) => {
             else{
                 return res.render('register',{user: null,error:null});
             }
-
-
-
-
 
         }
         else{
@@ -88,15 +85,22 @@ exports.register = async (req, res, next) => {
 
 
 
-
-
-
-
-
 }
 
 exports.forgotPassword = async (req, res) => {
     return res.render('forgotPassword');
+}
+
+exports.teacherprofile = async (req, res) => {
+    return res.render('teacher-profile');
+}
+
+exports.studentprofile = async (req, res) => {
+    return res.render('student-profile');
+}
+
+exports.uploadcourse = async (req, res) => {
+    return res.render('upload-course');
 }
 
 exports.Privacy = async (req, res) => {
@@ -198,7 +202,7 @@ exports.homepage = async(req , res) =>{
 }
 
 exports.purchasedhomepage = async(req , res) =>{
-    rres.redirect("/homepage");
+    res.redirect("/homepage");
 }
 
 

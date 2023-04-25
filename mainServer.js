@@ -15,6 +15,7 @@ const connectDb = require('./data/db.js');
 const session=require("express-session");
 
 const { homedir } = require('os');
+const user = require('./models/user.js');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }))
@@ -80,6 +81,33 @@ app.get('/wishlist', (req, res) => {
 })
 
 
+app.get("/add-to-wl/:course", (req, res) => {
+    if(req.session.isLoggedin){
+        
+        courseid = req.params.course
+        user2 = req.session.user
+        
+        wishlist = user2.wishlist
+        ind = wishlist.indexOf(courseid)
+        
+        if(ind == -1){
+            wishlist.push(courseid)
+        }
+        
+        userSchema.findByIdAndUpdate(user2._id,{wishlist:wishlist},{new:true}).then(()=>{
+                    console.log("Added To Wishlist")
+                    res.redirect("/coursedescpage/"+courseid)
+        })}
+                
+        
+
+
+    else{
+        res.render('login', { error: null });
+    }
+
+})
+
 app.get("/", (req, res) => {
     // req.session.isLoggedin
     res.render("homepage");
@@ -101,13 +129,14 @@ app.get("/checkout", (req, res) => {
 app.get("/checkout/:coursename", (req, res) => {
     
     if(req.session.isLoggedin == true){
-
+    user1 = req.session.user
     courseid = req.params.coursename
 
     coursesSchema.findOne({_id: courseid}).then((doc) => {
         if (!doc) {
             res.render("/")  // 404 page sey replace krdena
         } else{
+            
             doc.populate('teacher','fullname').then((fin1)=>{
             res.render("checkout",{user: req.session.user,course:fin1})     
         })}
@@ -138,7 +167,19 @@ app.post("/remove-wishlist/:Id",async (req,res)=>{
                     
                     userSchema.findByIdAndUpdate(doc._id,{wishlist:wishlist},{new:true}).then(()=>{
                     console.log("Removed From Wishlist")
-                    res.render("privacy")
+
+                    userSchema.findOne({username : doc.username}).then(user =>  {
+                        user.populate({
+                            path: 'wishlist',
+                            populate:{
+                                path: 'teacher'
+                            }
+                        }).then(()=>{
+                            
+                        res.render('wishlist',{user: user})
+                    })})
+                    
+                    
                 })
                 
 
@@ -311,4 +352,3 @@ const PORT = 8000;
 app.listen(PORT, (req, res) => {
     console.log(`server is listening on PORT number ${PORT}`);
 })
-

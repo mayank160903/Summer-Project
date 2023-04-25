@@ -11,11 +11,18 @@ const userSchema = new Schema({
   phone: { type: Number, required: true},
   password: { type: String, required: true },
   wishlist: [
-    {
+      {
         type: mongoose.ObjectId,
         ref: "courses",
-    },
-],
+      },
+    ],
+
+  purchased:[
+    {
+      type:Schema.Types.ObjectId,
+      ref:"courses"
+    }
+  ],
 });
 
 
