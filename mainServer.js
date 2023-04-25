@@ -80,6 +80,29 @@ app.get('/wishlist', (req, res) => {
     else res.render("login", { error: null });
 })
 
+app.get('/yourcourses', (req, res) => {
+    if (req.session.isLoggedin == true){
+        
+         userSchema.findOne({username : req.session.user.username}).then( user =>  {
+            
+            user.populate({
+                path: 'purchased',
+                populate:{
+                    path: 'teacher'
+
+                }
+            }).then(()=>{
+                
+            res.render('yourcourses',{user: user})
+        })}
+        )}
+        
+    
+
+    else res.render("login", { error: null });
+})
+
+
 
 app.get("/add-to-wl/:course", (req, res) => {
     if(req.session.isLoggedin){
@@ -93,15 +116,22 @@ app.get("/add-to-wl/:course", (req, res) => {
         if(ind == -1){
             wishlist.push(courseid)
         }
+
+        if(user2.purchased.indexOf(courseid) == -1){
         
         userSchema.findByIdAndUpdate(user2._id,{wishlist:wishlist},{new:true}).then(()=>{
                     console.log("Added To Wishlist")
                     res.redirect("/coursedescpage/"+courseid)
-        })}
+                }
+            )}
+        
+        else{
+            res.redirect("/coursedescpage/"+courseid)
+        }
                 
         
 
-
+    }
     else{
         res.render('login', { error: null });
     }
@@ -347,6 +377,11 @@ app.get("/logout", (req, res) => {
 
 
 });
+
+app.get('*', function(req, res){
+    res.status(404).render('pagenotfound');
+    
+  });
 
 const PORT = 8000;
 app.listen(PORT, (req, res) => {

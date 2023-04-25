@@ -34,7 +34,7 @@
                             <ul class="list-group list-group-flush" style="font-size: 16px;">
                               <li class="list-group-item atb" style=" border-bottom: 2px solid grey; background-color: #181a1b;"><a href = "">Your Profile</a></li>
                               <li class="list-group-item atb" style="border-bottom: 2px solid grey;  background-color: #181a1b;"><a href = "/wishlist"> Wishlist</a></li>
-                              <li class="list-group-item atb" style="border-bottom: 2px solid grey;  background-color: #181a1b;"><a href = "/yourcourses">Your Courses</a></li>
+                              <li class="list-group-item atb" style="border-bottom: 2px solid grey;  background-color: #181a1b;">Your Courses</li>
                               <li class="list-group-item atb" style="border-bottom: 2px solid grey;  background-color: #181a1b;"><a href = "/">Home</a></li>
                               
                               <li class="atb list-group-item" style="border-bottom: 2px solid grey;  background-color: #181a1b;"><a href = "/logout" id = "logoutbtn" class = "logout-button">Log Out</a></li>
@@ -52,15 +52,15 @@
                     <div class="rightcont">
                         <div class="rightmain d-flex flex-column">
                             <div class="rhead">
-                               <div class=""> Your Wishlist (<%=user.wishlist.length %>)</div>
+                               <div class=""> Your Courses (<%=user.purchased.length %>)</div>
                             </div>
                           
                           
 
-                            <% for (let i = 0;i<user.wishlist.length;i++){ %>
+                            <% for (let i = 0;i<user.purchased.length;i++){ %>
                               <div class="wishblock">
                                 <div class="imgcontainer">
-                                    <img src = <%=user.wishlist[i].imageUrl %>  class = "course-img img-fluid"
+                                    <img src = <%=user.purchased[i].imageUrl %>  class = "course-img img-fluid"
                                     width="230px">
                                 
                          
@@ -68,11 +68,11 @@
 
                                 <div class="wishitemleft d-flex flex-column">
                                   <div class="title2">
-                                    <a href = "http://localhost:8000/coursedescpage/<%=user.wishlist[i]._id%>" class = "courselink"><%= user.wishlist[i].title %></a>
+                                    <a href = "http://localhost:8000/coursedescpage/<%=user.purchased[i]._id%>" class = "courselink"><%= user.purchased[i].title %></a>
                                   </div>
 
                                   <div class="teacher">
-                                    <a>By <%= user.wishlist[i].teacher[0].fullname %></a>
+                                    <a>By <%= user.purchased[i].teacher[0].fullname %></a>
                                   </div>
 
                                   <div class="rating">
@@ -88,28 +88,21 @@
                                   </div>
 
                                   <div class="price">
-                                    <div><p>$<%= user.wishlist[i].price %></p></div>
+                                    <div><p>$<%= user.purchased[i].price %></p></div>
                                   </div>
                                 </div>
 
                                 <div class="rightitembar">
-                                  
-                                    <form id="del" method="POST" action="/remove-wishlist/<%= user.wishlist[i]._id %>">
-                                    <input type="hidden" name="del-item">
-                                    <div onclick="document.getElementById('del').submit();" style="padding-left: 2rem;">
-                                      <i class="bi bi-trash delicon" id = 'delete1'></i></div>
-                                    </form>
-                                    
-                                    
-                                    <button class="buy-now" onclick="window.location.href = '/checkout/<%=user.wishlist[i]._id %>' ">Buy Now</button>
+                                                                                            
+                                    <button class="buy-now" onclick="window.location.href = '/coursedescpage/<%=user.purchased[i]._id %>' ">Go To Course</button>
 
                                 </div>
                             </div>
                             <%}%>
 
 
-                            <% if (user.wishlist.length === 0){ %>
-                            <div class = "nothinginwish">Your Wishlist is Empty!</div>
+                            <% if (user.purchased.length === 0){ %>
+                            <div class = "nothinginwish">You Haven't Bought Any Courses!</div>
                             
                             <%}%>
                             
