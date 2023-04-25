@@ -224,7 +224,7 @@ app.post("/remove-wishlist/:Id",async (req,res)=>{
                             }
                         }).then(()=>{
                             
-                        res.render('wishlist',{user: user})
+                        res.redirect('/wishlist')
                     })})
                     
                     
@@ -238,8 +238,14 @@ app.post("/remove-wishlist/:Id",async (req,res)=>{
         })
     
 })
+
+
+
+
+
 app.get('/coursedescpage/:courseid', (req, res) => {
 
+    
     courseid = req.params.courseid
 
     coursesSchema.findOne({_id: courseid}).then((course) => {
@@ -248,20 +254,80 @@ app.get('/coursedescpage/:courseid', (req, res) => {
         } else{
             course.populate('teacher').then((course)=>{
                 console.log(course)
-                
-            res.render("coursedescpage",{user: req.session.user,course:course,auth:req.session.isLoggedin})     
-        })}
+                if(req.session.isLoggedin){
+                    res.render("coursedescpage",{user: req.session.user,course:course,auth:true})     
+                }
+                else{
+                    res.render("coursedescpage",{user: null,course:course,auth:false})
+                }
+            }
+        )}
     });
 })
 
-app.get("/catalogue", (req, res) => {
-    if(req.session.isLoggedin == true){
-    res.render("catalogue",{user:req.session.user,auth:req.session.isLoggedin});
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
     }
-    else{
-        res.render("catalogue",{auth:false})
-    }
-});
+}
+
+app.get("/catalogue", async (req, res) => {
+    rock = []
+    beginner = []
+    await coursesSchema.find({}).then( async (course) => {
+            
+        populatedcourse = []
+        for(let i = 0; i < course.length; i++){          
+           await course[i].populate('teacher').then((ct)=>{
+                populatedcourse.push(ct)
+            })
+        }
+
+
+        rock = populatedcourse.filter(obj => {
+            return obj.category === "rock"
+          })
+        shuffleArray(rock)
+
+          
+        beginner = populatedcourse.filter(obj => {
+            return obj.category === "beginner"
+          })
+        shuffleArray(beginner)
+        
+        metal = populatedcourse.filter(obj => {
+            return obj.category === "metal"
+          })
+        shuffleArray(metal)
+        
+        blues = populatedcourse.filter(obj => {
+            return obj.category === "blues"
+          })
+          shuffleArray(blues)
+        
+        console.log(metal[1].teacher.fullname)
+        
+        });
+
+        if(req.session.isLoggedin == true){
+        res.render("catalogue",{rock:rock,
+                                beginner:beginner,
+                                metal:metal,
+                                blues:blues,
+                                user:req.session.user,
+                                auth:req.session.isLoggedin});
+        }
+        else{
+            res.render("catalogue",{rock:rock,
+                                    beginner:beginner,
+                                    metal:metal,
+                                    blues:blues,
+                                    auth:false})
+        }
+    });
 
 app.post("/purchase/:coursename",(req,res) =>{
     
@@ -391,7 +457,7 @@ app.post('/login', (req, res) => {
 app.get("/logout", (req, res) => {
     req.session.destroy();
     console.log('over')
-    res.render("homepage",{auth:false})
+    res.redirect("/")
 
 
 });

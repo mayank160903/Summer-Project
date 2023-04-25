@@ -135,27 +135,32 @@
             </button>
         </div>
         </div>
+
             <div class="row row-cols-1 row-cols-md-3 g-4 cards">
-                <div class="col card-pad">
+              
+              <% for (let i =0;i<3;i++) { %>
+              <div class="col card-pad">
                     <div class="card crd">
-                        <a href="#"><img src="images/classic-rock.jpg" style="height: 197px; width: 347px ;" class="card-img-top" alt="..."></a>
+                        <a href="coursedescpage/<%= rock[i]._id %>"> <img src= '<%= rock[i].imageUrl %>' style="height: 197px; width: 347px ;" class="card-img-top" alt="..."></a>
                       <div class="card-body">
-                        <h6 class="card-title">Classic Rock</h6>
-                        <h6 class="card-title">By Marty Schwartz</h6>
+                        <h6 class="card-title limits"><%= rock[i].title %></h6>
+                        <h6 class="card-title">By <%= rock[i].teacher[0].fullname%></h6>
 
                         <!-- <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
                       </div>
                     </div>
                   </div>
-
-                <div class="col card-pad">
+                  <%}%>
+                
+                
+                  <!-- <div class="col card-pad">
                   <div class="card crd">
                     <a href="#"><img src="images/10-lead-chal.jpg" style="height: 197px; width: 347px ;" class="card-img-top" alt="..."></a>
                     <div class="card-body">
                       <h6 class="card-title">10 Day Lead guitar Challenge</h6>
                       <h6 class="card-title">By Andy Gilmour</h6>
                       
-                      <!-- <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
+               
                     </div>
                   </div>
                 </div>
@@ -166,14 +171,15 @@
                       <div class="card-body">
                         <h6 class="card-title">Rock and Metal guitar lessons</h6>
                         <h6 class="card-title">By Justin Young</h6>
-                        <!-- <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
+                        
                       </div>
                     </div>
-                  </div>
-              </div>
+                  </div> -->
+              
+                </div>
 
           </div>
-
+          
           <div class="beginner">
             <div class="title-seeall">
                 <div class="title">
@@ -182,43 +188,29 @@
         <div class="see-all">
             <button class="see-all-button">
                 <div class = "see-all-txt">See All</div>
-                <img src="images/seemore.png">
+                <img src="">
             </button>
         </div>
         </div>
+
             <div class="row row-cols-1 row-cols-md-3 g-4 cards">
+              
+              <% for (let i =0;i<3;i++){ %>
                 <div class="col card-pad">
                     <div class="card crd">
-                      <a href="#"><img src="images/ez-metal.jpg" style="height: 197px; width: 347px ;" class="card-img-top" alt="..."></a>
+                      <a href="coursedescpage/<%= metal[i]._id %>"><img src="<%= metal[i].imageUrl %>" style="height: 197px; width: 347px ;" class="card-img-top" alt="..."></a>
                       <div class="card-body">
-                        <h6 class="card-title">Easy Metal Songs</h6>
-                        <h6 class="card-title">By Carl Brown</h6>
+                        <h6 class="card-title"><%= metal[i].title %></h6>
+                        <h6 class="card-title">By <%= metal[i].teacher[0].fullname%></h6>
                      </div>
                     </div>
                   </div>
+                  <%}%>
 
-                  <div class="col card-pad">
-                    <div class="card crd">
-                      <a href="#"><img src="images/fam-solos.jpg" style="height: 197px; width: 347px ;" class="card-img-top" alt="..."></a>
-                      <div class="card-body">
-                        <h6 class="card-title">Famous Solos</h6>
-                        <h6 class="card-title">By Carl Brown</h6>
-                       </div>
-                    </div>
-                  </div>
-
-
-                <div class="col card-pad">
-                  <div class="card crd">
-                    <a href="#"><img src="images/metalimpl2.png" style="height: 197px; width: 347px ;" class="card-img-top" alt="..."></a>
-                    <div class="card-body">
-                      <h6 class="card-title">Metal Improvisation Level 2</h6>
-                      <h6 class="card-title">By Carl Brown</h6>
-                    </div>
-                  </div>
-                </div>
+    
               </div>
           </div>
+
           <br>
           <div class="beginner">
             <div class="title-seeall">

@@ -56,7 +56,7 @@
                     <div class="course-leftbar">
                         <div class="inner">
                             <div class="card d-none d-lg-block" style="width: 20rem; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
-                                <img class="card-img-top" src="<%= course.imageUrl %>" alt="Card image cap">
+                                <img src='<%= course.imageUrl %>' class="card-img-top" alt="Card image cap">
 
                               <a href="/coursepage">
                                 <div class = "play">
@@ -67,15 +67,7 @@
                                   <p class="card-text" style="color: black; "><%= course.description %></p>
                                   <a href="/checkout/<%= course._id %>" class="btn btn-dark">Buy This Course</a>
                                   
-                                 <!-- <% let index = user.wishlist.indexOf(course._id);
-                                    console.log(course._id)
-                                    if(index !== -1){
-                                 %>
-                                  <a href="/wishlist" class="btn btn-dark">Add to Wishlist</a>
-                                  <% } %>
-                                 <% if(index == -1){ %>
-                                    <a href="/wishlist" class="btn btn-dark">Already in Wishlist</a>
-                                 <% } %> -->
+                                 
                                   
                                     <a href="/add-to-wl/<%= course._id %>" class="btn btn-dark">Add to Wishlist</a>
                                     

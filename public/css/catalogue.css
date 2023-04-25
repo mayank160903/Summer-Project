@@ -41,6 +41,13 @@ head-slides{
     font-weight: bolder;
 }
 
+.limits{
+        padding: 0px 1.4rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      
+}
 .our-team-content{
     font-weight: lighter;
     color: white;
