@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Cabin&family=Lobster&family=Montserrat:ital,wght@1,100&family=Oswald:wght@300;400&family=Oxygen:wght@300;700&family=Prompt:wght@600&family=Quicksand:wght@300&family=Righteous&family=Secular+One&family=Tilt+Prism&display=swap" rel="stylesheet">
+   
 
   <link rel="stylesheet" href="css/contactus.css">
   <script src="js/contactus.js"></script>
@@ -20,9 +22,9 @@
   <% if(auth != true){ %>
   <%- include('header'); %>
 <%}%>
-
-<div class="wholepage">
-<body class="body-container-wrapper body-container">
+ 
+<div class="wholepage contact-bg">
+<body class="body-container-wrapper body-container contact-bg">
    
     <div class="section">
       <div class="container-fluid">
@@ -84,7 +86,7 @@
                   <form id="contact-form" type="submit" action="/connect" actionclass="form-horizontal" role="form"
                     method="POST">
 
-                    <div class="form-group row justify-content-between" style="width:100%">
+                    <div class="form-group row justify-content-between " style="width:100%">
                       <div class="col-sm-6" style="padding-right: 0px;padding-left: 30px;">
                         <input type="text" class="form-control" id="name" placeholder=" FIRST NAME" name="fname"
                           value="" required>
@@ -99,12 +101,12 @@
 
                     <div class="form-group">
                       <div class="col-sm-12">
-                        <input type="email" class="form-control" id="email" placeholder="EMAIL" name="email" value=""
+                        <input type="email" class="form-control " id="email" placeholder="EMAIL" name="email" value=""
                           required>
                       </div>
                     </div>
                     <div class="col-sm-12">
-                      <textarea class="form-control" rows="10" placeholder="MESSAGE" name="message" required></textarea>
+                      <textarea class="form-control " rows="10" placeholder="MESSAGE" name="message" required></textarea>
                     </div>
 
                     <button class="btn btn-primary send-button" id="submit" type="submit" value="SEND">
@@ -119,6 +121,13 @@
           </div>
         </div>
       </div>
+    </div>
+    <div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
     </div>
     </div>
     </div>
