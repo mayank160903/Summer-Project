@@ -241,6 +241,20 @@ app.post("/remove-wishlist/:Id",async (req,res)=>{
 
 
 
+app.get('/teacher-profile',(req, res) => {
+    return res.render('teacher-profile');
+})
+
+app.get('/upload-course',(req, res) => {
+    return res.render('upload-course');
+})
+
+app.get('/student-profile',(req, res) => {
+    return res.render('student-profile');
+})
+
+
+
 
 
 app.get('/coursedescpage/:courseid', (req, res) => {
@@ -286,7 +300,7 @@ app.get("/catalogue", async (req, res) => {
             })
         }
 
-
+        
         rock = populatedcourse.filter(obj => {
             return obj.category === "rock"
           })
@@ -308,7 +322,7 @@ app.get("/catalogue", async (req, res) => {
           })
           shuffleArray(blues)
         
-        console.log(metal[1].teacher.fullname)
+        
         
         });
 

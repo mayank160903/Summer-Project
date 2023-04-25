@@ -91,17 +91,7 @@ exports.forgotPassword = async (req, res) => {
     return res.render('forgotPassword');
 }
 
-exports.teacherprofile = async (req, res) => {
-    return res.render('teacher-profile');
-}
 
-exports.studentprofile = async (req, res) => {
-    return res.render('student-profile');
-}
-
-exports.uploadcourse = async (req, res) => {
-    return res.render('upload-course');
-}
 
 exports.Privacy = async (req, res) => {
     return res.render('Privacy');
@@ -131,6 +121,17 @@ exports.aboutus = async (req, res) => {
 exports.rockcoursedesc = async (req, res) => {
     return res.render('rockcoursedesc');
 }
+
+exports.studentprofile = async (req, res) => {
+    return res.render('/studentprofile');
+}
+exports.teacherprofile = async (req, res) => {
+    return res.render('/teacherprofile');
+}
+exports.courseprofile = async (req, res) => {
+    return res.render('/courseprofile');
+}
+
 
 exports.beginnercoursedesc = async (req, res) => {
     return res.render('beginnercoursedesc');

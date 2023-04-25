@@ -1,5 +1,5 @@
 const express = require("express");
-const {register , forgotPassword , Privacy , coursepage , coursedescpage , instructor , header , spotlight , aboutus , rockcoursedesc ,beginnercoursedesc , description , faq , profile , instructor2 , freelessons , catalogue , uploadcourse ,purchasedhomepage , homepage } = require("../controllers/userController.js");
+const {register , forgotPassword , Privacy , coursepage , coursedescpage , instructor , header , spotlight , aboutus , rockcoursedesc ,beginnercoursedesc , description , faq , profile , instructor2 , freelessons , catalogue  ,purchasedhomepage , homepage } = require("../controllers/userController.js");
 
 const router = express.Router();
 
@@ -40,7 +40,7 @@ router.get('/freelessons' ,freelessons )
 
 router.get('/catalogue' , catalogue);
 
-router.post('/uploadcourse' , uploadcourse);
+
 router.get('/homepage' , homepage);
 
 router.get('/purchase/homepage' , purchasedhomepage);
