@@ -17,7 +17,13 @@
     </head>
     <body style="background-color: black;">
 
-        <%- include('header'); -%>
+      <% if (auth == true) { %>
+        <%- include('login-header',{user:user}); %>
+      <%}%>
+      
+        <% if(auth != true){ %>
+        <%- include('header'); %>
+      <%}%>
 
         <div class="video-part">
           <div class="our-team">

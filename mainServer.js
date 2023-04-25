@@ -37,7 +37,7 @@ app.use(session({
 app.get("/login", (req, res) => {
     
     if(req.session.isLoggedin == true){
-    res.render("homepage", { error: null });
+    res.render("homepage", {error:null});
     }
     else{
         res.render("login", { error: null });
@@ -49,7 +49,7 @@ app.get('/register', (req, res) => {
 
      
     if(req.session.isLoggedin == true){
-    res.render("homepage", { error: null });
+    res.render("homepage", {user:req.session.user,auth:true});
     }
     else{
         res.render("Register", { user: null, error: null });
@@ -102,6 +102,14 @@ app.get('/yourcourses', (req, res) => {
     else res.render("login", { error: null });
 })
 
+app.get('/instructor', async (req, res) => {
+    if(req.session.isLoggedin == true){
+        res.render("instructor",{user:req.session.user,auth:req.session.isLoggedin});
+        }
+        else{
+            res.render("instructor",{auth:false})
+        }
+})
 
 
 app.get("/add-to-wl/:course", (req, res) => {
@@ -140,20 +148,30 @@ app.get("/add-to-wl/:course", (req, res) => {
 
 app.get("/", (req, res) => {
     // req.session.isLoggedin
-    res.render("homepage");
+    if(req.session.isLoggedin == true){
+        res.render("homepage",{user:req.session.user,auth:req.session.isLoggedin});
+        }
+        else{
+            res.render("homepage",{auth:false})
+        }
 })
 
 app.get("/contactus", (req, res) => {
     
-    res.render("contactus");
+    if(req.session.isLoggedin == true){
+        res.render("contactus",{user:req.session.user,auth:req.session.isLoggedin});
+        }
+        else{
+            res.render("contactus",{auth:false})
+        }
 });
 
 app.get("/checkout", (req, res) => {
     if(req.session.isLoggedin == true){
-    res.render("homepage");
+    res.render("homepage",{user:req.session.user,auth:req.session.isLoggedin});
     }
     else
-    res.render("login",{error: "You must be logged in"})
+    res.render("login",{error: null})
 })
 
 app.get("/checkout/:coursename", (req, res) => {
@@ -238,10 +256,10 @@ app.get('/coursedescpage/:courseid', (req, res) => {
 
 app.get("/catalogue", (req, res) => {
     if(req.session.isLoggedin == true){
-    res.render("catalogue");
+    res.render("catalogue",{user:req.session.user,auth:req.session.isLoggedin});
     }
     else{
-        res.render("login",{error:null})
+        res.render("catalogue",{auth:false})
     }
 });
 
@@ -373,7 +391,7 @@ app.post('/login', (req, res) => {
 app.get("/logout", (req, res) => {
     req.session.destroy();
     console.log('over')
-    res.render("homepage")
+    res.render("homepage",{auth:false})
 
 
 });

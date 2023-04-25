@@ -115,9 +115,7 @@ exports.coursedescpage = async (req, res) => {
     return res.render('coursedescpage');
 }
 
-exports.instructor = async (req, res) => {
-    return res.render('instructor');
-}
+
 
 exports.header = async (req, res) => {
     return res.render('header');
@@ -191,9 +189,6 @@ exports.uploadcourse = async(req , res) =>{
     console.log(req.body);
     const newcourse = await  new courses(req.body);
     await newcourse.save();
-
-
-
 
 }
 

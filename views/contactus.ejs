@@ -13,7 +13,14 @@
   <title>Contact Us</title>
 
 </head>
-<%- include('header'); -%>
+<% if (auth == true) { %>
+  <%- include('login-header',{user:user}); %>
+<%}%>
+
+  <% if(auth != true){ %>
+  <%- include('header'); %>
+<%}%>
+
 <div class="wholepage">
 <body class="body-container-wrapper body-container">
    

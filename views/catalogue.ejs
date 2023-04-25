@@ -24,9 +24,13 @@
     
     <body style="background-color: black;">
 
+      <% if (auth == true) { %>
+         <%- include('login-header',{user:user}); %>
+      <%}%>
 
-      <%- include('login-header'); -%>
-
+         <% if(auth != true){ %>
+         <%- include('header'); %>
+<%}%>
 
       <div class="head-slides">
         <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">

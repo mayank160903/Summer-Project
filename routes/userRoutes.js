@@ -12,7 +12,6 @@ router.get('/coursepage' , coursepage);
 
 router.get('/coursedescpage' , coursedescpage);
 
-router.get('/instructor' , instructor);
 
 router.get('/header' , header);
 
